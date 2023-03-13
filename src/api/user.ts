@@ -33,7 +33,7 @@ export function loginOutApi() {
 /** 获取用户信息Api */
 export function passwordChange(data: object) {
   return request({
-    url: '/user/passwordChange',
+    url: '/user/pwd_change',
     method: 'post',
     // baseURL: '/mock',
     data
