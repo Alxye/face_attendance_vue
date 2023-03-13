@@ -25,6 +25,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .box {
-    padding: 15px;
+    padding: 0 15px 15px 15px;
   }
 </style>
