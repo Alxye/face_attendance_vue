@@ -40,6 +40,7 @@ const actions = {
           resolve(res.data.token)
         })
       }).catch(err => {
+        console.log("catch err!!")
         reject(err)
       })
     })
