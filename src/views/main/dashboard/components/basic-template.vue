@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :lg="12" :md="24">
+    <el-col :lg="14" :md="24">
       <el-card class="box-card">
         <template #header>
           <div class="card">
@@ -8,7 +8,7 @@
               <span>公司信息</span>
             </div>
             <div class="card-right">
-              <el-icon style="font-size: 20px" color="grey" @click="ChangeCorpInfo">
+              <el-icon style="font-size: 20px;cursor: pointer;" color="grey" @click="ChangeCorpInfo">
                 <Setting/>
               </el-icon>
             </div>
@@ -21,7 +21,7 @@
           </div>
           <div class="item">
             <h4>公司地址</h4>
-            <p>ts版本的基础模板，含国际化功能</p>
+            <p>???</p>
           </div>
           <div class="item">
             <h4>公司员工数目</h4>
@@ -36,47 +36,60 @@
 
     </el-col>
 
-    <el-col :lg="12" :md="24">
-      <el-card class="box-card">
-        <template #header>
-          <div class="card-header">
-            <span>..</span>
-            <!--        <el-link type="primary" href="http://www.github.com/cmdparkour/vue-admin-box-template" target="_blank" style="margin-left: 20px;"></el-link>-->
-          </div>
-        </template>
-        <div class="box">
-
-        </div>
+    <el-col :lg="10" :md="24">
+      <el-card class="chart-card">
+        <StaffCircleChart/>
       </el-card>
     </el-col>
   </el-row>
 
-
+  <CorpInfoLayer :layer="layer" v-if="layer.show"/>
 </template>
 
 <script lang="ts">
 import {defineComponent, reactive} from 'vue'
 import Row from "@/views/main/dashboard/components/card/row.vue";
 import CorpInfoLayer from './CorpInfo.vue'
+import StaffCircleChart from './StaffCircleChart.vue'
+import {useStore} from "vuex";
 
 export default defineComponent({
-  components: {Row},
+  components: {
+    StaffCircleChart,
+    Row,
+    CorpInfoLayer
+  },
   setup() {
+    const store = useStore()
+    const form = reactive({
+      corr_name: '',
+      corp_address:'',
+      staff_total: '0',
+      corp_notice: '',
+    })
     const layer = reactive({
       show: false,
       showButton: true
     })
-    const showPasswordLayer = () => {
+    const ChangeCorpInfo = () => {
       layer.show = true
+    }
+    return {
+      layer,
+      ChangeCorpInfo
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
+.chart-card{
+  margin: 20px auto 0;
+  height: 356px;
+}
 .box-card {
   margin: 20px auto 0;
-
+  height: 356px;
   .card-header {
     text-align: left;
 
@@ -96,9 +109,8 @@ export default defineComponent({
 
 .card {
   display: inline-flex;
-  justify-content: space-between;
   width: 100%;
-
+  align-items:center;
   &-left {
     width: 90%;
     display: flex;
