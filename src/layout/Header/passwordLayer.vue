@@ -2,7 +2,7 @@
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
       <el-form-item label="管理员工号：" prop="name">
-        ？？？？
+        {{form.userId}}
       </el-form-item>
       <el-form-item label="原密码：" prop="old">
         <el-input v-model="form.old" placeholder="请输入原密码" show-password></el-input>
@@ -44,8 +44,8 @@ export default defineComponent({
     const layerDom: Ref<LayerType|null> = ref(null)
     const store = useStore()
     let form = ref({
-      userId: '123465',
-      name: '',
+      userId: store.state.user.info.staff_id,
+      name: store.state.user.info.name,
       old: '',
       new: ''
     })
