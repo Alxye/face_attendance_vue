@@ -1,0 +1,10 @@
+/public/
+/src/
+/auto-imports.d.ts
+/components.d.ts
+/index.html
+/package.json
+/package-lock.json
+/Readme.md
+/tsconfig.json
+/vite.config.ts
