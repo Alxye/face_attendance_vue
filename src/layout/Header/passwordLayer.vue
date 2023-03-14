@@ -62,7 +62,6 @@ export default defineComponent({
               old: form.value.old,
               new: form.value.new
             }
-            console.log(params)
             passwordChange(params)
             .then(res => {
               ElMessage({

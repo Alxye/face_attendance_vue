@@ -43,7 +43,6 @@ const actions = {
       loginApi(params)
       .then(res => {
         commit('tokenChange', res.data.token)
-        console.log(res.data)
         dispatch('getInfo', { staff_id: res.data.info.staff_id })
         .then(infoRes => {
           resolve(res.data.token)

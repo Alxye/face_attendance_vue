@@ -2,7 +2,7 @@
   <el-row :gutter="20">
     <el-col :lg="14" :md="24">
       <el-card class="box-card">
-        <template #header v-model="form">
+        <template #header>
           <div class="card">
             <div class="card-left">
               <span>公司信息</span>
@@ -14,22 +14,22 @@
             </div>
           </div>
         </template>
-        <div class="box">
+        <div class="box" v-bind="form">
           <div class="item">
             <h4>公司名</h4>
-            <p>？？？</p>
+            <p>{{ form.corp_name }}</p>
           </div>
           <div class="item">
             <h4>公司地址</h4>
-            <p>???</p>
+            <p>{{ form.corp_address }}</p>
           </div>
           <div class="item">
             <h4>公司员工数目</h4>
-            <p>js版本的基础模板，无国际化</p>
+            <p>{{ form.staff_total }}</p>
           </div>
           <div class="item">
             <h4>公司公告</h4>
-            <p>js版本的基础模板，含国际化功能</p>
+            <p style="text-align: left">{{ form.corp_notice }}</p>
           </div>
         </div>
       </el-card>
@@ -43,38 +43,67 @@
     </el-col>
   </el-row>
 
-  <CorpInfoLayer :layer="layer" v-if="layer.show"/>
+  <CorpInfoChangeLayer :layer="layer" v-if="layer.show"/>
+
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive} from 'vue'
+import {defineComponent, reactive,ref} from 'vue'
 import Row from "@/views/main/dashboard/components/card/row.vue";
-import CorpInfoLayer from './CorpInfo.vue'
+import CorpInfoChangeLayer from './CorpInfoChange.vue'
 import StaffCircleChart from './StaffCircleChart.vue'
+import {getCorpData} from "@/api/corporation";
 import {useStore} from "vuex";
+import router from "@/router";
 
 export default defineComponent({
   components: {
     StaffCircleChart,
     Row,
-    CorpInfoLayer
+    CorpInfoChangeLayer
   },
   setup() {
     const store = useStore()
+    const loading = ref(true)
     const form = reactive({
-      corr_name: '',
-      corp_address:'',
+      corp_name: '',
+      corp_address: '',
       staff_total: '0',
       corp_notice: '',
     })
     const layer = reactive({
-      width:"30%"
+      width: "30%",
       show: false,
       showButton: true
     })
     const ChangeCorpInfo = () => {
       layer.show = true
     }
+    // 获取公司信息
+    const getCorpInfoOp = (init: boolean) => {
+      loading.value = true
+      getCorpData()
+      .then(res => {
+        form.corp_name=res.data.name
+        form.corp_address=res.data.address
+        form.corp_notice=res.data.notice
+        let params = {
+          name:form.corp_name,
+          address:form.corp_address,
+          notice:form.corp_notice
+        }
+        console.log(params)
+        store.dispatch('corp/SaveInfo',params)
+        console.log(store.state.corp.info)
+      })
+      .catch(error => {
+        router.push('/404')
+      })
+      .finally(() => {
+        loading.value = false
+      })
+    }
+    getCorpInfoOp(true)
     return {
       layer,
       ChangeCorpInfo,
@@ -85,13 +114,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.chart-card{
+.chart-card {
   margin: 20px auto 0;
   height: 356px;
 }
+
 .box-card {
   margin: 20px auto 0;
   height: 356px;
+
   .card-header {
     text-align: left;
 
@@ -112,7 +143,8 @@ export default defineComponent({
 .card {
   display: inline-flex;
   width: 100%;
-  align-items:center;
+  align-items: center;
+
   &-left {
     width: 90%;
     display: flex;
