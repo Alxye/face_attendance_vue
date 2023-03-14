@@ -60,6 +60,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const layer = reactive({
+      width:"30%",
       show: false,
       showButton: true
     })

@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import basicTemplate from '@/views/main/dashboard/components/basic-template.vue'
+import basicTemplate from '@/views/main/dashboard/components/CorpInfo.vue'
 export default defineComponent({
   components: {
     basicTemplate
