@@ -7,4 +7,11 @@
 * 修改store.user.info结构，并入存储用户非敏感信息
 * 设计主页的布局格式
 ## 2023.3.14 zxx
-* 设计弹窗功能，新增width参数调整弹窗大小自适应，文件：`src/components/layer/index.vue`&`src/layout/Header/passwordLayer.vue`
+* 设计弹窗功能，新增width参数调整弹窗大小自适应`src/components/layer/index.vue`
+``` src/layout/Header/passwordLayer.vue 
+const layer = reactive({
+    width:"30%",
+    show: false,
+    showButton: true
+})
+```
