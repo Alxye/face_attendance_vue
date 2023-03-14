@@ -1,6 +1,7 @@
 import { createStore, createLogger } from 'vuex'
 import Persistent from './plugins/persistent'
 import {userState} from "@/store/modules/user";
+import {corpState} from "@/store/modules/corp";
 import {keepAliveState} from "@/store/modules/keepAlive";
 import {appState} from "@/store/modules/app";
 const debug = import.meta.env.MODE !== 'production'
@@ -8,6 +9,7 @@ const files= import.meta.globEager('./modules/*.ts')
 
 export interface RootState {
   user: userState,
+  corp:corpState,
   keepAlive: keepAliveState,
   app: appState
 }
