@@ -106,7 +106,6 @@ export default defineComponent({
       .then(() => {
         form.loading = true
         let params = {
-          // name: form.staff_id,
           staff_id: form.staff_id,
           password: form.password
         }

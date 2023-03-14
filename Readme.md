@@ -18,3 +18,17 @@
 > }) 
 > ```
 * 将公司信息存储至store，配合vuex
+* 完成了公司info卡片的展示以及公司信息的修正，新增`src/api/corporation.ts`用于公司模块request请求
+* 设计loading动画，当获取服务器端数据时load页面，超时则404，代码：`src/utils/system/loading.ts`<br/>
+具体用法：
+```angular2html
+> ...vue & ts
+<script>
+    import { showLoading, hideLoading } from '@/utils/system/loading'
+    ...
+    showLoading()
+    ...
+    hideLoading()
+</script>
+```
+| 待解决：pieChart传值问题，初始chart值为const，端口传值类型相同但...@_@

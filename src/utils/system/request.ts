@@ -55,7 +55,6 @@ function showError(error: any) {
       duration: 3 * 1000
     })
   }
-  
 }
 
 export default service

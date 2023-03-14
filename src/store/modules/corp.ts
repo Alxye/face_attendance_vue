@@ -1,11 +1,14 @@
 import {ActionContext} from 'vuex'
+import {getInfoApi} from "@/api/user";
+import {userState} from "@/store/modules/user";
+import {getStaffDistribution} from "@/api/corporation";
 
 export interface corpState {
-   info:object
+    info: object
 }
 
 const state = (): corpState => ({
-    info:{}
+    info: {}
 })
 
 // getters
@@ -25,12 +28,12 @@ const mutations = {
 // actions
 const actions = {
     SaveInfo({commit, dispatch}: ActionContext<corpState, corpState>, params: any) {
-      return new Promise((resolve, reject) => {
-          console.log(params)
-          commit('InfoChange', params)
-          resolve(params)
+        return new Promise((resolve, reject) => {
+            commit('InfoChange', params)
+            resolve(params)
         })
     }
+
     // // get user info after user logined
     // getInfo({commit}: ActionContext<userState, userState>, params: any) {
     //     return new Promise((resolve, reject) => {

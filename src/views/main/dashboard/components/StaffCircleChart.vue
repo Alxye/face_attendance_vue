@@ -8,12 +8,38 @@
 import { defineComponent, reactive } from 'vue'
 import Chart from '@/components/charts/index.vue'
 import option from './circle'
+import {hideLoading, showLoading} from "@/utils/system/loading";
+import {getStaffDistribution} from "@/api/corporation";
+import router from "@/router";
 export default defineComponent({
   components: {
     Chart
   },
   setup() {
+    // const getStaffDistributionOp = (init: boolean) => {
+    //   showLoading()
+    //   getStaffDistribution()
+    //       .then(res => {
+    //         // option.series[0].data=res.data
+    //         // console.log(typeof(option.series[0].data))
+    //         // console.log(options.series[0].data)
+    //         // console.log(typeof(res.data))
+    //         // console.log(res.data )
+    //         // console.log(store.state.corp.info)
+    //         // console.log(store.state.corp.info.name)
+    //       })
+    //       .catch(error => {
+    //         hideLoading()
+    //         router.push('/404')
+    //       })
+    //       .finally(() => {
+    //         hideLoading()
+    //       })
+    // }
+    // getStaffDistributionOp(true)
     const options = reactive(option)
+    // 获取公司信息
+    console.log(options.series)
     return {
       options
     }

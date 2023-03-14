@@ -5,8 +5,6 @@ export function loginApi(data: object) {
   return request({
     url: '/user/login',
     method: 'post',
-    // baseURL: '/',
-    // baseURL: '101.132.152.202:5000/',
     data
   })
 }
@@ -16,7 +14,6 @@ export function getInfoApi(data: object) {
   return request({
     url: '/user/info',
     method: 'post',
-    // baseURL: '/mock',
     data
   })
 }

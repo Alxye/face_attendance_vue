@@ -48,13 +48,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive,ref} from 'vue'
+import {defineComponent, reactive, ref} from 'vue'
 import Row from "@/views/main/dashboard/components/card/row.vue";
 import CorpInfoChangeLayer from './CorpInfoChange.vue'
 import StaffCircleChart from './StaffCircleChart.vue'
 import {getCorpData} from "@/api/corporation";
 import {useStore} from "vuex";
 import router from "@/router";
+import { showLoading, hideLoading } from '@/utils/system/loading'
 
 export default defineComponent({
   components: {
@@ -64,7 +65,6 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const loading = ref(true)
     const form = reactive({
       corp_name: '',
       corp_address: '',
@@ -79,35 +79,39 @@ export default defineComponent({
     const ChangeCorpInfo = () => {
       layer.show = true
     }
+
     // 获取公司信息
     const getCorpInfoOp = (init: boolean) => {
-      loading.value = true
+      showLoading()
       getCorpData()
-      .then(res => {
-        form.corp_name=res.data.name
-        form.corp_address=res.data.address
-        form.corp_notice=res.data.notice
-        let params = {
-          name:form.corp_name,
-          address:form.corp_address,
-          notice:form.corp_notice
-        }
-        console.log(params)
-        store.dispatch('corp/SaveInfo',params)
-        console.log(store.state.corp.info)
-      })
-      .catch(error => {
-        router.push('/404')
-      })
-      .finally(() => {
-        loading.value = false
-      })
+          .then(res => {
+            form.corp_name = res.data.name
+            form.corp_address = res.data.address
+            form.corp_notice = res.data.notice
+            let params = {
+              name: form.corp_name,
+              address: form.corp_address,
+              notice: form.corp_notice
+            }
+            store.dispatch('corp/SaveInfo', params)
+            // console.log(store.state.corp.info)
+            // console.log(store.state.corp.info.name)
+          })
+          .catch(error => {
+            hideLoading()
+            router.push('/404')
+          })
+          .finally(() => {
+            hideLoading()
+          })
     }
     getCorpInfoOp(true)
     return {
       layer,
       ChangeCorpInfo,
-      form
+      form,
+      showLoading,
+      hideLoading
     }
   }
 })
