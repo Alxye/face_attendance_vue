@@ -17,3 +17,4 @@
 >    showButton: true
 > }) 
 > ```
+* 将公司信息存储至store，配合vuex
