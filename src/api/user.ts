@@ -1,5 +1,12 @@
 import request from '@/utils/system/request'
-
+/** 获取首页4卡片内容api */
+export function getDashboardCardData(data: object) {
+  return request({
+    url: '/department/dashboardCard',
+    method: 'post',
+    data
+  })
+}
 /** 登录api */
 export function loginApi(data: object) {
   return request({

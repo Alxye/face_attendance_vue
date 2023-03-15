@@ -2,8 +2,8 @@
   <div class="box">
     <CorpInfo />
     <Card />
-    <Charts />
-    <Communication />
+<!--    <Charts />-->
+<!--    <Communication />-->
   </div>
 </template>
 

@@ -87,6 +87,7 @@ export default defineComponent({
           .then(res => {
             form.corp_name = res.data.name
             form.corp_address = res.data.address
+            form.staff_total = res.countStaff
             form.corp_notice = res.data.notice
             let params = {
               name: form.corp_name,

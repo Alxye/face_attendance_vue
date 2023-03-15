@@ -1,6 +1,9 @@
 import request from '@/utils/system/request'
 
 // 获取数据api
+
+
+// 获取数据api
 export function getData(data: object) {
   return request({
     url: '/card/list',
