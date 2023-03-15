@@ -45,6 +45,9 @@ import Github from './functionList/github.vue'
 import Theme from './functionList/theme.vue'
 import Breadcrumb from './Breadcrumb.vue'
 import PasswordLayer from './passwordLayer.vue'
+import {hideLoading, showLoading} from "@/utils/system/loading";
+import {getStaffDistribution} from "@/api/corporation";
+import router from "@/router";
 export default defineComponent({
   components: {
     FullScreen,
@@ -74,7 +77,10 @@ export default defineComponent({
     const loginOut = () => {
       store.dispatch('user/loginOut')
     }
-    
+
+    // const store = useStore()
+
+
     const showPasswordLayer = () => {
       layer.show = true
     }

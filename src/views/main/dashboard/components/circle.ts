@@ -1,26 +1,31 @@
-import {TRUE} from "sass";
-import {getStaffDistribution} from "@/api/corporation";
+
+import {useStore} from "vuex";
 import {hideLoading, showLoading} from "@/utils/system/loading";
-import router from "@/router";
+import {getStaffDistribution} from "@/api/corporation";
+import store from "@/store";
 
-let data2
-
-const getStaffDistributionOp = (init: boolean) => {
-    getStaffDistribution()
-        .then(res => {
-            data2 = res.data
-            // console.log(typeof (option.series[0].data))
-            // console.log(options.series[0].data)
-            console.log(typeof (res.data))
-            console.log(res.data)
-            return res.data
-            // console.log(store.state.corp.info)
-            // console.log(store.state.corp.info.name)
-        })
-}
-
-getStaffDistributionOp(true)
-console.log('?????????????!',data2)
+//
+// const getStaffDistributionOp = (init: boolean) => {
+//     getStaffDistribution()
+//         .then(res => {
+//             data2 = res.data
+//             // console.log(typeof (option.series[0].data))
+//             // console.log(options.series[0].data)
+//             // console.log(typeof (res.data))
+//             // console.log(res.data)
+//             return res.data
+//             // console.log(store.state.corp.info)
+//             // console.log(store.state.corp.info.name)
+//         })
+// }
+//
+// getStaffDistributionOp(true)
+// console.log('?????????????!', data2)
+const data2 =[
+    {},
+    {
+    }
+]
 
 const option = {
     title: {
@@ -55,9 +60,20 @@ const option = {
             labelLine: {
                 show: true
             },
-            data: data2
+            data:
+            store.state.corp.StaffDistribution
+            //     [
+            //     {
+            //         'name':"?12",
+            //         'value':3
+            //     },
+            //     {
+            //         'name':"?3122",
+            //         'value':44
+            //     }
+            // ]
         }
     ]
 };
 
-export default option
+export default  option

@@ -4,17 +4,27 @@ import {userState} from "@/store/modules/user";
 import {getStaffDistribution} from "@/api/corporation";
 
 export interface corpState {
-    info: object
+    info: object,
+    StaffDistribution:object,
+    needUpdate:boolean
 }
 
 const state = (): corpState => ({
-    info: {}
+    info: {},
+    StaffDistribution: {},
+    needUpdate:true
 })
 
 // getters
 const getters = {
     info(state: corpState) {
         return state.info
+    },
+    StaffDistribution(state: corpState) {
+        return state.StaffDistribution
+    },
+    needUpdate(state: corpState) {
+        return state.needUpdate
     }
 }
 
@@ -22,6 +32,12 @@ const getters = {
 const mutations = {
     InfoChange(state: corpState, info: object) {
         state.info = info
+    },
+    StaffDistributionChange(state: corpState, StaffDistribution: object) {
+        state.StaffDistribution = StaffDistribution
+    },
+    needUpdateStatusChange(state: corpState, needUpdate: boolean) {
+        state.needUpdate = needUpdate
     }
 }
 
@@ -32,7 +48,19 @@ const actions = {
             commit('InfoChange', params)
             resolve(params)
         })
-    }
+    },
+    SaveStaffDistribution({commit, dispatch}: ActionContext<corpState, corpState>, params: any) {
+        return new Promise((resolve, reject) => {
+            commit('StaffDistributionChange', params)
+            resolve(params)
+        })
+    },
+    updateStatusChange({commit, dispatch}: ActionContext<corpState, corpState>, params: boolean) {
+        return new Promise((resolve, reject) => {
+            commit('needUpdateStatusChange', params)
+            resolve(params)
+        })
+    },
 
     // // get user info after user logined
     // getInfo({commit}: ActionContext<userState, userState>, params: any) {

@@ -52,7 +52,7 @@ import {defineComponent, reactive, ref} from 'vue'
 import Row from "@/views/main/dashboard/components/card/row.vue";
 import CorpInfoChangeLayer from './CorpInfoChange.vue'
 import StaffCircleChart from './StaffCircleChart.vue'
-import {getCorpData} from "@/api/corporation";
+import {getCorpData, getStaffDistribution} from "@/api/corporation";
 import {useStore} from "vuex";
 import router from "@/router";
 import { showLoading, hideLoading } from '@/utils/system/loading'

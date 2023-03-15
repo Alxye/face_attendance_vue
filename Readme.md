@@ -32,3 +32,5 @@
 </script>
 ```
 | 待解决：pieChart传值问题，初始chart值为const，端口传值类型相同但...@_@
+## 2023.3.15
+* pieChart简单粗暴解决了，干脆reload

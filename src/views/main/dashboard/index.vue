@@ -13,6 +13,10 @@ import CorpInfo from './components/CorpInfo.vue'
 import Communication from './components/communication.vue'
 import Card from './components/card/index.vue'
 import Charts from './components/charts/index.vue'
+import {hideLoading, showLoading} from "@/utils/system/loading";
+import {getStaffDistribution} from "@/api/corporation";
+import router from "@/router";
+import { useStore } from 'vuex'
 export default defineComponent({
   components: {
     Card,
