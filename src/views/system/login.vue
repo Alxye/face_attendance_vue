@@ -78,6 +78,8 @@ export default defineComponent({
       password: '123456',
       loading: false
     })
+
+      // const store=useStore()
     const passwordType = ref('password')
     const passwordTypeChange = () => {
       passwordType.value === '' ? passwordType.value = 'password' : passwordType.value = ''

@@ -47,7 +47,7 @@ export default defineComponent({
                 })()
               })
             }
-          // arr=toRaw(store.state.corp.StaffDistribution)
+          // store.dispatch('corp/SaveStaffDistribution', arr)
           if (!isEqual(arr, toRaw(store.state.corp.StaffDistribution))) {
             console.log('update!')
             store.dispatch('corp/SaveStaffDistribution', arr)

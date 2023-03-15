@@ -18,7 +18,7 @@
 <script lang="ts">
 import type {LayerType} from '@/components/layer/index.vue'
 import type {Ref} from 'vue'
-import {defineComponent, ref} from 'vue'
+import {defineComponent, reactive, ref} from 'vue'
 import {ElMessage} from 'element-plus'
 import {useStore} from 'vuex'
 import {updateCorpData} from '@/api/corporation'
@@ -49,7 +49,6 @@ export default defineComponent({
       address: info.address,
       notice: info.notice
     })
-
     function submit() {
       let params = {
         name: form.value.name,
