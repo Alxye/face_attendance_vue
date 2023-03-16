@@ -65,9 +65,7 @@ export default defineComponent({
                 message: '部门新增成功！'
               })
               layerDom.value && layerDom.value.close()
-              // setTimeout(() => {
-              //   store.dispatch('user/loginOut')
-              // }, 2000)
+              location.reload()
             })
           } else {
             return false;

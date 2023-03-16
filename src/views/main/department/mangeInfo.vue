@@ -1,39 +1,54 @@
 <template>
-  <div  @confirm="submit" ref="layerDom">
+  <div @confirm="submit" ref="layerDom">
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin:20px;">
-      <el-form-item label="管理员工号：" prop="name">
-        {{test[0].msg}}
+      <el-form-item label="部门名：" prop="name">
+        <el-input v-model="form.name" placeholder="请输入部门名"></el-input>
       </el-form-item>
-      <el-form-item label="原密码：" prop="old">
-        <el-input v-model="form.old" placeholder="请输入原密码" show-password></el-input>
+      <el-form-item label="部门公告：" prop="notice">
+        <el-input v-model="form.notice" placeholder="请输入部门公告" type="textarea"></el-input>
       </el-form-item>
-			<el-form-item label="新密码：" prop="new">
-			  <el-input v-model="form.new" placeholder="请输入新密码" show-password></el-input>
-			</el-form-item>
+      <el-form-item label="部门人数：" prop="staff_count">
+        <span>{{form.staff_count}} 人</span>
+      </el-form-item>
     </el-form>
+  </div>
+  <div >
+    <el-button style="width: 50%;padding: 20px" type="primary" @click="update">确认</el-button>
+  </div>
+  <div >
+    <el-button style="width: 50%;margin-top:20px;padding: 20px" type="danger" @click="findDelete">删除</el-button>
   </div>
 </template>
 
 <script lang="ts">
-import type { LayerType } from '@/components/layer/index.vue'
-import type { Ref } from 'vue'
-import type { ElFormItemContext } from 'element-plus/lib/el-form/src/token'
+import type {LayerType} from '@/components/layer/index.vue'
+import type {Ref} from 'vue'
+import type {ElFormItemContext} from 'element-plus/lib/el-form/src/token'
 import {defineComponent, reactive, ref, watch} from 'vue'
-import { ElMessage } from 'element-plus'
-import { useStore } from 'vuex'
-import { passwordChange } from '@/api/user'
-import Layer from '@/components/layer/index.vue'
+import {ElMessage} from 'element-plus'
+import {useStore} from 'vuex'
+import {departmentUpdate} from '@/api/department'
 
 // const props = defineProps({
 //   dic: String
 // })
 
 export default defineComponent({
-  components: {
-    Layer
-  },
+  // components: {
+  //   Layer
+  // },
   props: {
-    dic: String,
+    dic: {
+      type: Object,
+      default: () => {
+        return {
+          name: '',
+          notice: '',
+          staff_count: 0,
+          id:0
+        }
+      }
+    },
     layer: {
       type: Object,
       default: () => {
@@ -46,73 +61,98 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    let xxx: any = ref(props.dic)
-    const ruleForm: Ref<ElFormItemContext|null> = ref(null)
-    const layerDom: Ref<LayerType|null> = ref(null)
+    let data: any = reactive(props.dic)
+    console.log(data)
+    console.log(data.name)
+    const ruleForm: Ref<ElFormItemContext | null> = ref(null)
+    const layerDom: Ref<LayerType | null> = ref(null)
     const store = useStore()
-    let form = ref({
-      userId: store.state.user.info.staff_id,
-      name: store.state.user.info.name,
-      old: '',
-      new: ''
+    let form = reactive({
+      id:data.id,
+      name: data.name,
+      notice: data.notice,
+      staff_count:data.staff_count
     })
-    // const test=reactive([
-    //   {id:1,msg:"???"}
-    // ])
-    const test=reactive([
-      {id:1,msg:"???"}
-    ])
     watch(
-      () => props.dic,
-      (newValue, oldValue) => {
-
-        console.log(newValue, 'tttttnewValue', oldValue, 'tttttoldValue')
-        test[0].msg=newValue
-        console.log(test[0].msg)
-      }
+        () => props.dic,
+        (newValue, oldValue) => {
+          // console.log("new:", newValue, 'old:', oldValue)
+          form.id = newValue.id
+          form.name = newValue.name
+          form.notice = newValue.notice
+          form.staff_count = newValue.staff_count
+        }
     )
     const rules = {
-      old: [{ required: true, message: '请输入原密码', trigger: 'blur' }],
-      new: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+      name: [{required: true, message: '请输入部门名', trigger: 'blur'}]
     }
-    function submit() {
+
+    function update() {
       if (ruleForm.value) {
-        ruleForm.value.validate((valid) => {
+        ruleForm.value.validate((valid: any) => {
           if (valid) {
-            let params = {
-              staff_id: form.value.userId,
-              old: form.value.old,
-              new: form.value.new
-            }
-            passwordChange(params)
-            .then(res => {
+            if(form.name==data.name&&form.notice==data.notice){
               ElMessage({
-                type: 'success',
-                message: '密码修改成功，即将跳转到登录页面'
-              })
-              layerDom.value && layerDom.value.close()
-              setTimeout(() => {
-                store.dispatch('user/loginOut')
-              }, 2000)
-            })
+                    type: 'warning',
+                    message: '未作任何改变'
+                  })
+              return false;
+            }
+            else{
+              let params = {
+              id:form.id,
+              name: form.name,
+              notice: form.notice
+            }
+            departmentUpdate(params)
+                .then(res => {
+                  ElMessage({
+                    type: 'success',
+                    message: '更新成功'
+                  })
+                  // layerDom.value && layerDom.value.close()
+                  location.reload()
+                })
+            }
           } else {
             return false;
           }
         });
       }
     }
+
+    function findDelete() {
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmbuttontext: "确定",
+        cancelbuttontext: "取消",
+        type: "warning",
+      }).then(() => {
+          axios
+            .delete("http://localhost:8913/api/papers/" + row.paperid)
+            .then((res) => {
+              this.$message.success("删除成功！");
+              this.findall();
+            })
+            .catch((res) => {
+              this.$message.console.error("删除失败！");
+            });
+        })
+        .catch(() => {
+          this.$message.info("已取消操作！");
+        });
+    },
+
     return {
       form,
       rules,
       layerDom,
       ruleForm,
-      test,
-      submit
+      update
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-  
+
 </style>

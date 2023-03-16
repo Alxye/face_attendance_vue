@@ -26,10 +26,7 @@
       <el-col :span="12" class="el-col-tree-box">
         <h2>部门信息</h2>
         <div class="custom-tree des">
-          <mange-info v-if="layer.show" :layer="layer" v-for="(row, key) in active.des" :dic="row" :key="key">{{
-              row
-            }}
-          </mange-info>
+          <mange-info v-if="layer.show" :layer="layer" v-for="(row, key) in [active]" :dic="row" :key="key"></mange-info>
           <p v-if="!layer.show">点击左侧部门，可查看并管理到每个部门的信息</p>
         </div>
       </el-col>
@@ -72,15 +69,15 @@ export default defineComponent({
     const showAddDepartmentLayer=()=>{
       layer_AddDepartment.show = true
     }
-    let active = ref({des: ['点击左侧部门信息，可查看并管理到每个部门的信息']}) as any
+    let active = ref({dic: ['点击左侧部门信息，可查看并管理到每个部门的信息']}) as any
 
     const handleNodeClick = (row: object) => {
       layer.show = true
       active.value = row
-      console.log(row);
+      console.log("row:",row);
     }
     let data = ref([
-      {name: "dasff"}
+      {}
     ])
     console.log(data)
     console.log(typeof (data))

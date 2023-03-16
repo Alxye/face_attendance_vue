@@ -15,3 +15,11 @@ export function addDepartment(data:object) {
     data
   })
 }
+/** 获取公司数据api */
+export function departmentUpdate(data:object) {
+  return request({
+    url: '/department/update',
+    method: 'post',
+    data
+  })
+}
