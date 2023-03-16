@@ -23,3 +23,12 @@ export function departmentUpdate(data:object) {
     data
   })
 }
+
+/** 获取公司数据api */
+export function departmentDelete(data:object) {
+  return request({
+    url: '/department/delete',
+    method: 'post',
+    data
+  })
+}

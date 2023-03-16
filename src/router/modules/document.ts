@@ -26,36 +26,36 @@ const route: Route[] = [
         // meta: { title: 'message.menu.document.function' } //用于国际化 @_@
         meta: { title: '部门信息管理' }
       },
-      {
-        path: 'menu',
-        component: createNameComponent(() => import('@/views/main/document/menu.vue')),
-        meta: { title: 'message.menu.document.menu' }
-      },
-      {
-        path: 'keep-alive',
-        component: createNameComponent(() => import('@/views/main/document/keepAlive.vue')),
-        meta: { title: 'message.menu.document.keepAlive' }
-      },
-      {
-        path: 'crud',
-        component: createNameComponent(() => import('@/views/main/document/crud.vue')),
-        meta: { title: 'message.menu.document.crud' }
-      },
-      {
-        path: 'theme',
-        component: createNameComponent(() => import('@/views/main/document/theme.vue')),
-        meta: { title: 'message.menu.document.theme' }
-      },
-      {
-        path: 'systemfont',
-        component: createNameComponent(() => import('@/views/main/document/systemfont.vue')),
-        meta: { title: 'message.menu.document.systemfont' }
-      },
-      {
-        path: 'api',
-        component: createNameComponent(() => import('@/views/main/document/api.vue')),
-        meta: { title: 'message.menu.document.api' }
-      },
+      // {
+      //   path: 'menu',
+      //   component: createNameComponent(() => import('@/views/main/document/menu.vue')),
+      //   meta: { title: 'message.menu.document.menu' }
+      // },
+      // {
+      //   path: 'keep-alive',
+      //   component: createNameComponent(() => import('@/views/main/document/keepAlive.vue')),
+      //   meta: { title: 'message.menu.document.keepAlive' }
+      // },
+      // {
+      //   path: 'crud',
+      //   component: createNameComponent(() => import('@/views/main/document/crud.vue')),
+      //   meta: { title: 'message.menu.document.crud' }
+      // },
+      // {
+      //   path: 'theme',
+      //   component: createNameComponent(() => import('@/views/main/document/theme.vue')),
+      //   meta: { title: 'message.menu.document.theme' }
+      // },
+      // {
+      //   path: 'systemfont',
+      //   component: createNameComponent(() => import('@/views/main/document/systemfont.vue')),
+      //   meta: { title: 'message.menu.document.systemfont' }
+      // },
+      // {
+      //   path: 'api',
+      //   component: createNameComponent(() => import('@/views/main/document/api.vue')),
+      //   meta: { title: 'message.menu.document.api' }
+      // },
     ]
   }
 ]

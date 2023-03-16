@@ -54,3 +54,33 @@
 * 今日组会，不多搞了
 * 新增部门有了，但是还要加不可增加已存在部门，就酱
 * 大成功！！！新增部门+更新部门信息全部完成，还弄了一个卡片组件与父子传值与监听变更 WIN
+* 部门信息管理写完了，在考虑要不要将打卡时间设计也放部门信息管理里面
+* 今日代码：卡片组件与传值<br/>
+` 组件应用src/views/main/department/manage.vue`
+```angular2html
+<template>
+<el-tree
+        :data="data"
+        :props="defaultProps"
+        :highlight-current="true"
+        @node-click="handleNodeClick"
+>
+</el-tree>
+<mange-info v-if="layer.show" :layer="layer" v-for="(row, key) in [active]" :dic="row" :key="key"></mange-info>
+
+<script>
+    // 引入子组件 用于展示选中列表项的部门信息
+    components: {
+        MangeInfo
+    },
+    // 卡片内容随列表选中变更
+    const handleNodeClick = (row: object) => {
+        layer.show = true
+        active.value = row
+        console.log("row:", row);
+    }
+```
+`组件设计：src/views/main/department/mangeInfo.vue`
+```angular2html
+
+```

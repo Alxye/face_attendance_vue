@@ -19,7 +19,11 @@
     <el-button style="width: 50%;margin-top:20px;padding: 20px" type="danger" @click="findDelete">删除</el-button>
   </div>
 
+<<<<<<< HEAD
   <Layer :layer="DeleteComfirmBox" @confirm="Delete" ref="layerDom" v-if="DeleteComfirmBox.show">
+=======
+  <Layer :layer="DeleteConfirmBox" @confirm="Delete" ref="layerDom" v-if="DeleteConfirmBox.show">
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
 
   </Layer>
 </template>
@@ -31,7 +35,11 @@ import type {ElFormItemContext} from 'element-plus/lib/el-form/src/token'
 import {defineComponent, reactive, ref, watch} from 'vue'
 import {ElMessage} from 'element-plus'
 import {useStore} from 'vuex'
+<<<<<<< HEAD
 import {departmentUpdate} from '@/api/department'
+=======
+import {departmentUpdate,departmentDelete} from '@/api/department'
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
 import Layer from "@/components/layer/messagebox.vue";
 
 // const props = defineProps({
@@ -69,7 +77,11 @@ export default defineComponent({
     let data: any = reactive(props.dic)
     const ruleForm: Ref<ElFormItemContext | null> = ref(null)
     const layerDom: Ref<LayerType | null> = ref(null)
+<<<<<<< HEAD
     const DeleteComfirmBox = reactive({
+=======
+    const DeleteConfirmBox = reactive({
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
       width: "30%",
       show: false,
       title: '',
@@ -128,6 +140,7 @@ export default defineComponent({
       }
     }
 
+<<<<<<< HEAD
     function Delete(){
       if(data.staff_count!=0){
         ElMessage({
@@ -136,13 +149,42 @@ export default defineComponent({
               })
         DeleteComfirmBox.show=false
               return false;
+=======
+    function Delete() {
+
+      if (form.staff_count != 0) {
+        ElMessage({
+          type: 'warning',
+          message: '该部门尚有员工'
+        })
+        DeleteConfirmBox.show = false
+        return false;
+      } else {
+        let params = {
+          id: form.id
+        }
+        departmentDelete(params)
+            .then(res => {
+              ElMessage({
+                type: 'success',
+                message: '删除成功'
+              })
+              // layerDom.value && layerDom.value.close()
+              location.reload()
+            })
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
       }
     }
 
 
     function findDelete() {
+<<<<<<< HEAD
       DeleteComfirmBox.show = true
       DeleteComfirmBox.title="该部门将被永久删除"
+=======
+      DeleteConfirmBox.show = true
+      DeleteConfirmBox.title = "该部门将被永久删除"
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
     }
 
     return {
@@ -152,7 +194,11 @@ export default defineComponent({
       ruleForm,
       update,
       findDelete,
+<<<<<<< HEAD
       DeleteComfirmBox,
+=======
+      DeleteConfirmBox,
+>>>>>>> 82f255c3322240eef1727bc57e379024bf6dd09a
       Delete
     }
   }
