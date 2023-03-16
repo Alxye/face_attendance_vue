@@ -55,7 +55,7 @@ export default defineComponent({
     }
     function submit() {
       if (ruleForm.value) {
-        ruleForm.value.validate((valid) => {
+        ruleForm.value.validate((valid: any) => {
           if (valid) {
             let params = {
               staff_id: form.value.userId,

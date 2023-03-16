@@ -7,3 +7,11 @@ export function getDepartmentInfo() {
     method: 'get'
   })
 }
+/** 获取公司数据api */
+export function addDepartment(data:object) {
+  return request({
+    url: '/department/add',
+    method: 'post',
+    data
+  })
+}

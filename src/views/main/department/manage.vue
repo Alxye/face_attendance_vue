@@ -13,18 +13,23 @@
           >
             <template #default="{ data }">
               <div class="custom-tree-node">
-<!--                <i :class="data.children ? 'el-icon-files': 'el-icon-document'"></i>-->
-<!--                <span>{{ node.name }}</span>-->
+                <!--                <i :class="data.children ? 'el-icon-files': 'el-icon-document'"></i>-->
+                <!--                <span>{{ node.name }}</span>-->
                 <span>{{ data.name }}</span>
               </div>
             </template>
           </el-tree>
         </div>
+        <el-button type="primary" class="button-type" @click="showAddDepartmentLayer">新增部门</el-button>
+        <AddDepartmentLayer :layer="layer_AddDepartment" v-if="layer_AddDepartment.show" />
       </el-col>
       <el-col :span="12" class="el-col-tree-box">
         <h2>部门信息</h2>
-        <div class="custom-tree des" >
-          <mange-info v-if="layer.show" :layer="layer" v-for="(row, key) in active.des" :dic="row" :key="key">{{ row }}</mange-info>
+        <div class="custom-tree des">
+          <mange-info v-if="layer.show" :layer="layer" v-for="(row, key) in active.des" :dic="row" :key="key">{{
+              row
+            }}
+          </mange-info>
           <p v-if="!layer.show">点击左侧部门，可查看并管理到每个部门的信息</p>
         </div>
       </el-col>
@@ -40,31 +45,42 @@ import {radioData, selectData} from "@/views/main/pages/categoryTable/enum";
 import {hideLoading, showLoading} from "@/utils/system/loading";
 import {getCorpData} from "@/api/corporation";
 import router from "@/router";
-import MangeInfo from "@/views/main/department/mangeInfo.vue";
+import MangeInfo from "./mangeInfo.vue";
+import AddDepartmentLayer from "./AddDepartmentLayer.vue";
 
 export default defineComponent({
   components: {
-    MangeInfo
+    MangeInfo,
+    AddDepartmentLayer
   },
   setup() {
     // const defaultProps = {
     //   children: 'children',
     //   label: 'label'
     // }
+    // this layer use for Add department
+    const layer_AddDepartment = reactive({
+      width: "50%",
+      show: false,
+      showButton: true
+    })
     const layer = reactive({
       width: "30%",
       show: false,
       showButton: true
     })
+    const showAddDepartmentLayer=()=>{
+      layer_AddDepartment.show = true
+    }
     let active = ref({des: ['点击左侧部门信息，可查看并管理到每个部门的信息']}) as any
 
     const handleNodeClick = (row: object) => {
-      layer.show=true
+      layer.show = true
       active.value = row
       console.log(row);
     }
     let data = ref([
-      {name:"dasff"}
+      {name: "dasff"}
     ])
     console.log(data)
     console.log(typeof (data))
@@ -81,7 +97,7 @@ export default defineComponent({
               const item = res.data[key];
               arr.push(item);
             }
-            data.value=reactive(arr)
+            data.value = reactive(arr)
             console.log(data)
             console.log(typeof (data))
           })
@@ -102,7 +118,9 @@ export default defineComponent({
       // defaultProps,
       active,
       handleNodeClick,
-      layer
+      layer,
+      layer_AddDepartment,
+      showAddDepartmentLayer
     }
   }
 })
@@ -155,6 +173,25 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     height: 100%;
+  }
+}
+
+.button-type {
+  margin-top: 10px;
+  padding: 20px;
+  line-height: 89px;
+  font-size:15px;
+  font-weight:600;
+  letter-spacing: 10px;
+  background: var(--system-primary-color);
+  border-color: var(--system-primary-color);
+  &:hover {
+    background: var(--system-primary-text-color)!important;
+    color:var(--system-primary-color)!important;
+  }
+  &:active  {
+    background: var(--system-primary-color)!important;
+    color:var(--system-primary-text-color)!important;
   }
 }
 
