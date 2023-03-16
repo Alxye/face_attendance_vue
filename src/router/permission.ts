@@ -35,15 +35,15 @@ import Tab from './modules/tab'
 const asyncRoutes: Route[] = [
   ...Dashboard,
   ...Document,
-  ...Component,
-  ...Pages,
-  ...Menu,
-  ...Directive,
-  ...Chart,
-  ...SystemManage,
-  ...Print,
-  ...Community,
-  ...Tab,
+  // ...Component,
+  // ...Pages,
+  // ...Menu,
+  // ...Directive,
+  // ...Chart,
+  // ...SystemManage,
+  // ...Print,
+  // ...Community,
+  // ...Tab,
 ]
 
 /** 

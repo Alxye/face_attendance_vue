@@ -5,7 +5,7 @@
         <el-input v-model="form.name" placeholder="请输入新部门名称"></el-input>
       </el-form-item>
       <el-form-item label="新部门公告：" prop="notice">
-        <el-input v-model="form.notice" placeholder="请输入公司公告" type="textarea"></el-input>
+        <el-input v-model="form.notice" placeholder="请输入新部门公告" type="textarea"></el-input>
       </el-form-item>
     </el-form>
   </Layer>
