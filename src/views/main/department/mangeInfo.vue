@@ -8,16 +8,20 @@
         <el-input v-model="form.notice" placeholder="请输入部门公告" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="部门人数：" prop="staff_count">
-        <span>{{form.staff_count}} 人</span>
+        <span>{{ form.staff_count }} 人</span>
       </el-form-item>
     </el-form>
   </div>
-  <div >
+  <div>
     <el-button style="width: 50%;padding: 20px" type="primary" @click="update">确认</el-button>
   </div>
-  <div >
+  <div>
     <el-button style="width: 50%;margin-top:20px;padding: 20px" type="danger" @click="findDelete">删除</el-button>
   </div>
+
+  <Layer :layer="DeleteComfirmBox" @confirm="Delete" ref="layerDom" v-if="DeleteComfirmBox.show">
+
+  </Layer>
 </template>
 
 <script lang="ts">
@@ -28,15 +32,16 @@ import {defineComponent, reactive, ref, watch} from 'vue'
 import {ElMessage} from 'element-plus'
 import {useStore} from 'vuex'
 import {departmentUpdate} from '@/api/department'
+import Layer from "@/components/layer/messagebox.vue";
 
 // const props = defineProps({
 //   dic: String
 // })
 
 export default defineComponent({
-  // components: {
-  //   Layer
-  // },
+  components: {
+    Layer
+  },
   props: {
     dic: {
       type: Object,
@@ -45,7 +50,7 @@ export default defineComponent({
           name: '',
           notice: '',
           staff_count: 0,
-          id:0
+          id: 0
         }
       }
     },
@@ -62,16 +67,19 @@ export default defineComponent({
   },
   setup(props, ctx) {
     let data: any = reactive(props.dic)
-    console.log(data)
-    console.log(data.name)
     const ruleForm: Ref<ElFormItemContext | null> = ref(null)
     const layerDom: Ref<LayerType | null> = ref(null)
-    const store = useStore()
+    const DeleteComfirmBox = reactive({
+      width: "30%",
+      show: false,
+      title: '',
+      showButton: true
+    })
     let form = reactive({
-      id:data.id,
+      id: data.id,
       name: data.name,
       notice: data.notice,
-      staff_count:data.staff_count
+      staff_count: data.staff_count
     })
     watch(
         () => props.dic,
@@ -91,28 +99,27 @@ export default defineComponent({
       if (ruleForm.value) {
         ruleForm.value.validate((valid: any) => {
           if (valid) {
-            if(form.name==data.name&&form.notice==data.notice){
+            if (form.name == data.name && form.notice == data.notice) {
               ElMessage({
-                    type: 'warning',
-                    message: '未作任何改变'
-                  })
+                type: 'warning',
+                message: '未作任何改变'
+              })
               return false;
-            }
-            else{
+            } else {
               let params = {
-              id:form.id,
-              name: form.name,
-              notice: form.notice
-            }
-            departmentUpdate(params)
-                .then(res => {
-                  ElMessage({
-                    type: 'success',
-                    message: '更新成功'
+                id: form.id,
+                name: form.name,
+                notice: form.notice
+              }
+              departmentUpdate(params)
+                  .then(res => {
+                    ElMessage({
+                      type: 'success',
+                      message: '更新成功'
+                    })
+                    // layerDom.value && layerDom.value.close()
+                    location.reload()
                   })
-                  // layerDom.value && layerDom.value.close()
-                  location.reload()
-                })
             }
           } else {
             return false;
@@ -121,33 +128,32 @@ export default defineComponent({
       }
     }
 
+    function Delete(){
+      if(data.staff_count!=0){
+        ElMessage({
+                type: 'warning',
+                message: '未作任何改变'
+              })
+        DeleteComfirmBox.show=false
+              return false;
+      }
+    }
+
+
     function findDelete() {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-        confirmbuttontext: "确定",
-        cancelbuttontext: "取消",
-        type: "warning",
-      }).then(() => {
-          axios
-            .delete("http://localhost:8913/api/papers/" + row.paperid)
-            .then((res) => {
-              this.$message.success("删除成功！");
-              this.findall();
-            })
-            .catch((res) => {
-              this.$message.console.error("删除失败！");
-            });
-        })
-        .catch(() => {
-          this.$message.info("已取消操作！");
-        });
-    },
+      DeleteComfirmBox.show = true
+      DeleteComfirmBox.title="该部门将被永久删除"
+    }
 
     return {
       form,
       rules,
       layerDom,
       ruleForm,
-      update
+      update,
+      findDelete,
+      DeleteComfirmBox,
+      Delete
     }
   }
 })
