@@ -2,6 +2,7 @@
   <div class="box">
     <Chart :option="options"/>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -11,16 +12,55 @@ import Chart from '@/components/charts/index.vue'
 import option from './circle'
 import {hideLoading, showLoading} from "@/utils/system/loading";
 import {getStaffDistribution} from "@/api/corporation";
-import {useStore} from "vuex";
+// import {useStore} from "vuex";
+// import store from "@/store";
 
 export default defineComponent({
   components: {
     Chart
   },
   setup() {
+    // let option = {
+    //   title: {
+    //     text: '员工部门分布',
+    //   },
+    //   series: [
+    //     {
+    //       name: '访问来源',
+    //       type: 'pie',
+    //       radius: ['50%', '100%'],
+    //       avoidLabelOverlap: true,
+    //       itemStyle: {
+    //         borderRadius: 10,
+    //         borderColor: '#fff',
+    //         borderWidth: 10
+    //       },
+    //       label: {
+    //         show: false,
+    //         position: 'center'
+    //       },
+    //       emphasis: {
+    //         label: {
+    //           show: true,
+    //           fontSize: '26',
+    //           fontWeight: 'bold',
+    //           formatter: (p: { name: string; value: string; }) => {
+    //             let dom = `<div backgroundColor="red">1</div>`
+    //             return p.name + '\n' + p.value
+    //           }
+    //         }
+    //       },
+    //       labelLine: {
+    //         show: true
+    //       },
+    //       data:[{}]
+    //
+    //     }
+    //   ]
+    // };
 
     const options = reactive(option)
-    const store = useStore()
+    // const store = useStore()
 
     getStaffDistribution()
         .then(res => {
@@ -32,27 +72,28 @@ export default defineComponent({
             const item = res.data[key];
             arr.push(item);
           }
-          const isEqual = (a, b) => {
-              if (Object.keys(a).length !== Object.keys(b).length) {
-                return false;
-              }
-
-              return Object.keys(a).every(i => {
-                return typeof (a[i]) === typeof (b[i]) && (() => {
-                  if (typeof (a[i]) === 'object' && a[i] != null) {
-                    return isEqual(a[i], b[i])
-                  } else {
-                    return a[i] === b[i]
-                  }
-                })()
-              })
-            }
+          // const isEqual = (a, b) => {
+          //   if (Object.keys(a).length !== Object.keys(b).length) {
+          //     return false;
+          //   }
+          //
+          //   return Object.keys(a).every(i => {
+          //     return typeof (a[i]) === typeof (b[i]) && (() => {
+          //       if (typeof (a[i]) === 'object' && a[i] != null) {
+          //         return isEqual(a[i], b[i])
+          //       } else {
+          //         return a[i] === b[i]
+          //       }
+          //     })()
+          //   })
+          // }
+          options.series[0].data=arr
           // store.dispatch('corp/SaveStaffDistribution', arr)
-          if (!isEqual(arr, toRaw(store.state.corp.StaffDistribution))) {
-            console.log('update!')
-            store.dispatch('corp/SaveStaffDistribution', arr)
-            location.reload()
-          }
+          // if (!isEqual(arr, toRaw(store.state.corp.StaffDistribution))) {
+          //   console.log('update!')
+          //   store.dispatch('corp/SaveStaffDistribution', arr)
+          //   location.reload()
+          // }
         })
         .catch(error => {
           hideLoading()

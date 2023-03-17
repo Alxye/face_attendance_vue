@@ -27,7 +27,7 @@ const data2 =[
     }
 ]
 
-const option = {
+let option = {
     title: {
         text: '员工部门分布',
     },
@@ -51,7 +51,7 @@ const option = {
                     show: true,
                     fontSize: '26',
                     fontWeight: 'bold',
-                    formatter: (p) => {
+                    formatter: (p:any) => {
                         let dom = `<div backgroundColor="red">1</div>`
                         return p.name + '\n' + p.value
                     }
@@ -60,8 +60,8 @@ const option = {
             labelLine: {
                 show: true
             },
-            data:
-            store.state.corp.StaffDistribution
+            data:[{}]
+            // store.state.corp.StaffDistribution
             //     [
             //     {
             //         'name':"?12",
