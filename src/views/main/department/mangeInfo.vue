@@ -1,5 +1,5 @@
 <template>
-  <div @confirm="submit" ref="layerDom">
+  <div @confirm="submit" ref="layerDom" >
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="150px" style="margin:20px;">
       <el-form-item label="部门名：" prop="name">
         <el-input :disabled=form.disabled v-model="form.name" placeholder="请输入部门名"></el-input>
@@ -49,6 +49,7 @@
 import type {LayerType} from '@/components/layer/index.vue'
 import type {Ref} from 'vue'
 import type {FormInstance} from 'element-plus'
+// import type {ElFormItemContext} from 'element-plus/lib/el-form/src/token'
 import {defineComponent, reactive, ref, watch} from 'vue'
 import {ElMessage} from 'element-plus'
 import {departmentUpdate, departmentDelete} from '@/api/department'
@@ -93,7 +94,6 @@ export default defineComponent({
     //   new Date(2023, 1, 1, 0, 0),
     //   new Date(2023, 1, 1, 23, 59),
     // ])
-    let test: any = ref(false)
     let data: any = reactive(props.dic)
     const ruleForm: Ref<FormInstance | null> = ref(null)
     const layerDom: Ref<LayerType | null> = ref(null)
@@ -103,15 +103,9 @@ export default defineComponent({
       title: '',
       showButton: true
     })
-    const store = useStore()
-    // var timestamp3 = 1403058804000
-    // var newDate = new Date("2023-01-01 " + data.clock_in_start)
-    // newDate.setTime(timestamp3)
-    // console.log(newDate)
-    // console.log(typeof (newDate))
-
+    const store=useStore()
     //
-      ///// 用于时间戳
+    ///// 用于时间戳
     // value_clockin.value[0].setTime(data.clock_in_start)
     // value_clockin.value[1].setTime(data.clock_in_end)
     // value_clockout.value[0].setTime(data.clock_out_start)
@@ -129,6 +123,7 @@ export default defineComponent({
       clockout: [new Date("2023-01-01 " + data.clock_out_start), new Date("2023-01-01 " + data.clock_out_end)],
       disabled: data.id != store.state.user.info.department_id
     })
+
     watch(
         () => props.dic,
         (newValue, oldValue) => {
@@ -137,6 +132,7 @@ export default defineComponent({
           form.name = newValue.name
           form.notice = newValue.notice
           form.staff_count = newValue.staff_count
+
           ///// 用于时间戳
           // value_clockin.value[0].setTime(newValue.clock_in_start)
           // value_clockin.value[1].setTime(newValue.clock_in_end)
@@ -154,6 +150,7 @@ export default defineComponent({
     const rules = {
       name: [{required: true, message: '请输入部门名', trigger: 'blur'}]
     }
+
     function getTime(date:Date){
       const sign2 = ":";
       let hour = date.getHours(); // 时
@@ -182,6 +179,10 @@ export default defineComponent({
                 getTime(form.clockin[1])== data.clock_in_end &&
                 getTime(form.clockout[0]) == data.clock_out_start &&
                 getTime(form.clockout[1]) == data.clock_out_end
+                // form.clockin[0].getTime()==data.clock_in_start &&
+                // form.clockin[1].getTime()==data.clock_in_end &&
+                // form.clockout[0].getTime()==data.clock_out_start &&
+                // form.clockout[1].getTime()==data.clock_out_start
             ) {
               ElMessage({
                 type: 'warning',
@@ -197,6 +198,10 @@ export default defineComponent({
                 clock_in_end: getTime(form.clockin[1]),
                 clock_out_start: getTime(form.clockout[0]),
                 clock_out_end: getTime(form.clockout[1]),
+                // clock_in_start: form.clockin[0].getTime(),
+                // clock_in_end: form.clockin[1].getTime(),
+                // clock_out_start: form.clockout[0].getTime(),
+                // clock_out_end: form.clockout[1].getTime(),
               }
               departmentUpdate(params)
                   .then(res => {
@@ -254,8 +259,7 @@ export default defineComponent({
       update,
       findDelete,
       Delete,
-      DeleteConfirmBox,
-      test
+      DeleteConfirmBox
     }
   }
 })

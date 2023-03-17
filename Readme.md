@@ -40,18 +40,14 @@
     hideLoading()
 </script>
 ```
-
 | 待解决：pieChart传值问题，初始chart值为const，端口传值类型相同但...@_@
-
 ## 2023.3.15
-
 * pieChart传值问题解决了，在后端接口返回json的时候，前端处理成array即可
 * pieChart新问题：request请求好了之后，组件内部data没有变，sad（没有直接的解决方式），原有的option本就是常量，option已经是Porxy类型了，但是没有用，emo了
 * pieChart解决方法：干脆简单粗暴，request部门分布信息存入store中，然后每次request的时候判断一下信息有没有变，变了则reload
 * Big Problem：request请求后，页面数据一点没变 <br/> Solution：引入reactive()就能解决了，瑞斯拜
 * `首页做完哩！`
 * 开始做公司信息管理了，设计思路
-
 ````angular2html
 -信息管理
     -部门信息管理
@@ -62,7 +58,6 @@
     -修改部门信息（部门名称、部门公告）
 -打卡时间设置
 ````
-
 * 设计了部门信息管理初步框架，待完善功能：修改部门信息，待添加功能：删除已有部门/新增部门
 
 ## 2023.3.16
@@ -73,7 +68,6 @@
 * 部门信息管理写完了，在考虑要不要将打卡时间设计也放部门信息管理里面
 * 今日代码：卡片组件与传值<br/>
   ` 组件应用src/views/main/department/manage.vue`
-
 ```angular2html
 <template>
 <el-tree

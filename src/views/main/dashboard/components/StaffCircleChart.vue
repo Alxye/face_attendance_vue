@@ -21,8 +21,48 @@ export default defineComponent({
     Chart
   },
   setup() {
-    const options = reactive(option)
     const router=useRouter()
+    // let option = {
+    //   title: {
+    //     text: '员工部门分布',
+    //   },
+    //   series: [
+    //     {
+    //       name: '访问来源',
+    //       type: 'pie',
+    //       radius: ['50%', '100%'],
+    //       avoidLabelOverlap: true,
+    //       itemStyle: {
+    //         borderRadius: 10,
+    //         borderColor: '#fff',
+    //         borderWidth: 10
+    //       },
+    //       label: {
+    //         show: false,
+    //         position: 'center'
+    //       },
+    //       emphasis: {
+    //         label: {
+    //           show: true,
+    //           fontSize: '26',
+    //           fontWeight: 'bold',
+    //           formatter: (p: { name: string; value: string; }) => {
+    //             let dom = `<div backgroundColor="red">1</div>`
+    //             return p.name + '\n' + p.value
+    //           }
+    //         }
+    //       },
+    //       labelLine: {
+    //         show: true
+    //       },
+    //       data:[{}]
+    //
+    //     }
+    //   ]
+    // };
+
+    const options = reactive(option)
+    // const store = useStore()
 
     getStaffDistribution()
         .then(res => {
