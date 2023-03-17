@@ -41,7 +41,7 @@ export default defineComponent({
     }
 
     console.log(list)
-    list[0].data = store.state.user.info.department_name
+
     list[1].data = nowDate(b)
     let params = {
       department_id: store.state.user.info.department_id
@@ -49,6 +49,7 @@ export default defineComponent({
     getDashboardCardData(params)
         .then(res => {
           return new Promise((resolve, reject) => {
+            list[0].data = res.data.department_name
             list[2].data = res.data.appealstaffcount
             list[3].data = res.data.appealattendancecount
           })

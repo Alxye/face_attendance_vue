@@ -1,10 +1,4 @@
 
-import {useStore} from "vuex";
-import {hideLoading, showLoading} from "@/utils/system/loading";
-import {getStaffDistribution} from "@/api/corporation";
-import store from "@/store";
-
-//
 // const getStaffDistributionOp = (init: boolean) => {
 //     getStaffDistribution()
 //         .then(res => {
@@ -18,16 +12,8 @@ import store from "@/store";
 //             // console.log(store.state.corp.info.name)
 //         })
 // }
-//
-// getStaffDistributionOp(true)
-// console.log('?????????????!', data2)
-const data2 =[
-    {},
-    {
-    }
-]
 
-const option = {
+let option = {
     title: {
         text: '员工部门分布',
     },
@@ -51,7 +37,7 @@ const option = {
                     show: true,
                     fontSize: '26',
                     fontWeight: 'bold',
-                    formatter: (p) => {
+                    formatter: (p:any) => {
                         let dom = `<div backgroundColor="red">1</div>`
                         return p.name + '\n' + p.value
                     }
@@ -60,8 +46,8 @@ const option = {
             labelLine: {
                 show: true
             },
-            data:
-            store.state.corp.StaffDistribution
+            data:[{}]
+            // store.state.corp.StaffDistribution
             //     [
             //     {
             //         'name':"?12",

@@ -102,7 +102,7 @@
 `组件设计：src/views/main/department/mangeInfo.vue`
 
 ```angular2html
-字典
+**字典**
 <script>
     props: {
         dic: {
@@ -119,8 +119,7 @@
         }
     ,
     }
-    **
-    数据监听 **
+**数据监听 **
     watch(
             () => props.dic,
             (newValue, oldValue) => {
@@ -129,3 +128,67 @@
     )
 ```
 * 加入了打卡时间设置，但有一个问题，new Data().setTime(时间戳)返回的是number对象，而不是Data对象无法在TimePicker里面显示（悲
+## 2023.3.17 zxx
+* 解决了获取数据库时间戳，打卡时间不正常显示的问题，只需要传递Date对象即可，Date.setTime()后传递Date
+* 与组员统一了数据库打卡时间的对象格式，部门打卡时间为Time格式及24小时时分秒，考勤打卡的时间为DateTime
+* 将时间戳在前后端传递与显示的模块修正为Date对象在前后端传递与显示  
+`前端采用TimePicker组件 ： src/views/main/department/mangeInfo.vue`
+```angular2html
+// 其中clockin & clockout 绑定两个TimePicker，reactive用于响应
+let form = reactive({
+      id: data.id,
+      name: data.name,
+      notice: data.notice,
+      staff_count: data.staff_count,
+      ///// 用于时间戳
+      // clockin: value_clockin,
+      // clockout: value_clockout,
+      clockin: [new Date("2023-01-01 " + data.clock_in_start), new Date("2023-01-01 " + data.clock_in_end)],
+      clockout: [new Date("2023-01-01 " + data.clock_out_start), new Date("2023-01-01 " + data.clock_out_end)],
+      disabled: data.id != store.state.user.info.department_id
+    })
+// 与昨日同，采用watch()监听树节点传递的值，并更新卡片组件值
+watch(
+        () => props.dic,
+        (newValue, oldValue) => {
+          ///// 用于时间戳
+          // value_clockin.value[0].setTime(newValue.clock_in_start)
+          // value_clockin.value[1].setTime(newValue.clock_in_end)
+          // value_clockout.value[0].setTime(newValue.clock_out_start)
+          // value_clockout.value[1].setTime(newValue.clock_out_end)
+          // form.clockin = [value_clockin.value[0],value_clockin.value[1]]
+          // form.clockout = [value_clockout.value[0],value_clockout.value[1]]
+          // form.disabled = newValue.id != store.state.user.info.department_id;
+          
+          // Ts Date对象创造需有年月日，故看似赘余实则必要
+          form.clockin = [new Date("2023-01-01 " + newValue.clock_in_start), new Date("2023-01-01 " + newValue.clock_in_end)],
+          form.clockout = [new Date("2023-01-01 " + newValue.clock_out_start), new Date("2023-01-01 " + newValue.clock_out_end)],
+          form.disabled = newValue.id != store.state.user.info.department_id;
+        }
+// getTime() 用于处理request提交的time值由Date对象转变为字符串
+function getTime(date:Date){
+      const sign2 = ":";
+      let hour = date.getHours(); // 时
+      let minutes = date.getMinutes(); // 分
+      let seconds = date.getSeconds(); //秒
+      // 给一位数的数据前面加 “0”
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minutes >= 0 && minutes <= 9) {
+        minutes = "0" + minutes;
+      }
+      if (seconds >= 0 && seconds <= 9) {
+        seconds = "0" + seconds;
+      }
+      return hour + sign2 + minutes + sign2 + seconds;
+    }
+```
+`后端采用借助time.strptime将字符串"01:23:45"转化为time.struct_time用于更新操作`
+```angular2html
+# ./routes/department.py
+clock_in_start = time.strptime("2023-01-01 " + data['clock_in_start'], "%Y-%m-%d %H:%M:%S")
+# ./models/department.py ---> department.model 模型构建列属性为Time故更新时分秒
+clock_in_start = db.Column(db.Time, nullable=False)
+```
+* 本人负责的模块已完成，进入数据库整合阶段

@@ -1,18 +1,18 @@
 <template>
   <div @confirm="submit" ref="layerDom">
-    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin:20px;">
+    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="150px" style="margin:20px;">
       <el-form-item label="部门名：" prop="name">
-        <el-input v-model="form.name" placeholder="请输入部门名"></el-input>
+        <el-input :disabled=form.disabled v-model="form.name" placeholder="请输入部门名"></el-input>
       </el-form-item>
       <el-form-item label="部门公告：" prop="notice">
-        <el-input v-model="form.notice" placeholder="请输入部门公告" type="textarea"></el-input>
+        <el-input :disabled=form.disabled v-model="form.notice" placeholder="请输入部门公告" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="部门人数：" prop="staff_count">
         <span>{{ form.staff_count }} 人</span>
       </el-form-item>
       <el-form-item label="上班打卡时间段：" prop="clock_in">
         <el-time-picker
-            @change="TimePicker()"
+            :disabled=form.disabled
             v-model="form.clockin"
             is-range
             range-separator="To"
@@ -22,6 +22,7 @@
       </el-form-item>
       <el-form-item label="下班打卡时间段：" prop="clock_out">
         <el-time-picker
+            :disabled=form.disabled
             v-model="form.clockout"
             is-range
             range-separator="To"
@@ -33,8 +34,8 @@
 
       </div>
       <el-col class="wrapper">
-        <el-button class="wrapper-content" type="primary" @click="update">确认</el-button>
-        <el-button class="wrapper-content" type="danger" @click="findDelete">删除</el-button>
+        <el-button :disabled=form.disabled class="wrapper-content" type="primary" @click="update">确认</el-button>
+        <el-button :disabled=!form.disabled class="wrapper-content" type="danger" @click="findDelete">删除</el-button>
       </el-col>
     </el-form>
   </div>
@@ -47,15 +48,13 @@
 <script lang="ts">
 import type {LayerType} from '@/components/layer/index.vue'
 import type {Ref} from 'vue'
-import type {ElFormItemContext} from 'element-plus/lib/el-form/src/token'
+import type {FormInstance} from 'element-plus'
 import {defineComponent, reactive, ref, watch} from 'vue'
 import {ElMessage} from 'element-plus'
 import {departmentUpdate, departmentDelete} from '@/api/department'
 import Layer from "@/components/layer/messagebox.vue";
+import {useStore} from "vuex";
 
-// const props = defineProps({
-//   dic: String
-// })
 
 export default defineComponent({
   components: {
@@ -85,16 +84,18 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const value_clockin = ref<[Date, Date]>([
-      new Date(2023, 1, 1, 0, 0),
-      new Date(2023, 1, 1, 23, 59),
-    ])
-    const value_clockout = ref<[Date, Date]>([
-      new Date(2023, 1, 1, 0, 0),
-      new Date(2023, 1, 1, 23, 59),
-    ])
+    /////// 用于时间戳
+    // const value_clockin = ref<[Date, Date]>([
+    //   new Date(2023, 1, 1, 0, 0),
+    //   new Date(2023, 1, 1, 23, 59),
+    // ])
+    // const value_clockout = ref<[Date, Date]>([
+    //   new Date(2023, 1, 1, 0, 0),
+    //   new Date(2023, 1, 1, 23, 59),
+    // ])
+    let test: any = ref(false)
     let data: any = reactive(props.dic)
-    const ruleForm: Ref<ElFormItemContext | null> = ref(null)
+    const ruleForm: Ref<FormInstance | null> = ref(null)
     const layerDom: Ref<LayerType | null> = ref(null)
     const DeleteConfirmBox = reactive({
       width: "30%",
@@ -102,17 +103,32 @@ export default defineComponent({
       title: '',
       showButton: true
     })
+    const store = useStore()
+    // var timestamp3 = 1403058804000
+    // var newDate = new Date("2023-01-01 " + data.clock_in_start)
+    // newDate.setTime(timestamp3)
+    // console.log(newDate)
+    // console.log(typeof (newDate))
+
+    //
+      ///// 用于时间戳
+    // value_clockin.value[0].setTime(data.clock_in_start)
+    // value_clockin.value[1].setTime(data.clock_in_end)
+    // value_clockout.value[0].setTime(data.clock_out_start)
+    // value_clockout.value[1].setTime(data.clock_out_end)
+
     let form = reactive({
       id: data.id,
       name: data.name,
       notice: data.notice,
       staff_count: data.staff_count,
-      clockin:([value_clockin.value[0].setTime(data.clock_in_start),value_clockin.value[1].setTime(data.clock_in_end)]),
-      clockout:([value_clockin.value[0].setTime(data.clock_out_start),value_clockin.value[1].setTime(data.clock_out_end)])
+      ///// 用于时间戳
+      // clockin: value_clockin,
+      // clockout: value_clockout,
+      clockin: [new Date("2023-01-01 " + data.clock_in_start), new Date("2023-01-01 " + data.clock_in_end)],
+      clockout: [new Date("2023-01-01 " + data.clock_out_start), new Date("2023-01-01 " + data.clock_out_end)],
+      disabled: data.id != store.state.user.info.department_id
     })
-    console.log(value_clockin)
-    console.log(new Date().setTime(1675180800000))
-    console.log(form.clockin[0])
     watch(
         () => props.dic,
         (newValue, oldValue) => {
@@ -121,25 +137,52 @@ export default defineComponent({
           form.name = newValue.name
           form.notice = newValue.notice
           form.staff_count = newValue.staff_count
-          form.clockin=([value_clockin.value[0].setTime(newValue.clock_in_start),value_clockin.value[1].setTime(newValue.clock_in_end)])
-          form.clockout=([value_clockin.value[0].setTime(newValue.clock_out_start),value_clockin.value[1].setTime(newValue.clock_out_end)])
+          ///// 用于时间戳
+          // value_clockin.value[0].setTime(newValue.clock_in_start)
+          // value_clockin.value[1].setTime(newValue.clock_in_end)
+          // value_clockout.value[0].setTime(newValue.clock_out_start)
+          // value_clockout.value[1].setTime(newValue.clock_out_end)
+          // form.clockin = [value_clockin.value[0],value_clockin.value[1]]
+          // form.clockout = [value_clockout.value[0],value_clockout.value[1]]
+          // form.disabled = newValue.id != store.state.user.info.department_id;
+
+          form.clockin = [new Date("2023-01-01 " + newValue.clock_in_start), new Date("2023-01-01 " + newValue.clock_in_end)],
+          form.clockout = [new Date("2023-01-01 " + newValue.clock_out_start), new Date("2023-01-01 " + newValue.clock_out_end)],
+          form.disabled = newValue.id != store.state.user.info.department_id;
         }
     )
     const rules = {
       name: [{required: true, message: '请输入部门名', trigger: 'blur'}]
     }
-
-    function TimePicker() {
-      console.log(value_clockin.value)
-      console.log(value_clockin.value[0].getTime())
-      console.log(typeof (value_clockin.value[0].getTime()))
+    function getTime(date:Date){
+      const sign2 = ":";
+      let hour = date.getHours(); // 时
+      let minutes = date.getMinutes(); // 分
+      let seconds = date.getSeconds(); //秒
+      // 给一位数的数据前面加 “0”
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (minutes >= 0 && minutes <= 9) {
+        minutes = "0" + minutes;
+      }
+      if (seconds >= 0 && seconds <= 9) {
+        seconds = "0" + seconds;
+      }
+      return hour + sign2 + minutes + sign2 + seconds;
     }
 
     function update() {
       if (ruleForm.value) {
         ruleForm.value.validate((valid: any) => {
           if (valid) {
-            if (form.name == data.name && form.notice == data.notice) {
+            if (form.name == data.name &&
+                form.notice == data.notice &&
+                getTime(form.clockin[0]) == data.clock_in_start &&
+                getTime(form.clockin[1])== data.clock_in_end &&
+                getTime(form.clockout[0]) == data.clock_out_start &&
+                getTime(form.clockout[1]) == data.clock_out_end
+            ) {
               ElMessage({
                 type: 'warning',
                 message: '未作任何改变'
@@ -150,10 +193,10 @@ export default defineComponent({
                 id: form.id,
                 name: form.name,
                 notice: form.notice,
-                clock_in_start:form.clockin.value[0].getTime(),
-                clock_in_end:value_clockin.value[1].getTime(),
-                clock_out_start:value_clockout.value[0].getTime(),
-                clock_out_end:value_clockout.value[1].getTime(),
+                clock_in_start: getTime(form.clockin[0]),
+                clock_in_end: getTime(form.clockin[1]),
+                clock_out_start: getTime(form.clockout[0]),
+                clock_out_end: getTime(form.clockout[1]),
               }
               departmentUpdate(params)
                   .then(res => {
@@ -212,7 +255,7 @@ export default defineComponent({
       findDelete,
       Delete,
       DeleteConfirmBox,
-      TimePicker
+      test
     }
   }
 })

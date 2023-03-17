@@ -24,11 +24,3 @@ export function getStaffDistribution() {
     method: 'get'
   })
 }
-
-/** 获取公司所有员工数api */
-export function CountStaff() {
-  return request({
-    url: '/corp/CountStaff',
-    method: 'get'
-  })
-}

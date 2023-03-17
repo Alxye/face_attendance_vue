@@ -2,6 +2,7 @@
   <div class="box">
     <Chart :option="options"/>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -11,16 +12,17 @@ import Chart from '@/components/charts/index.vue'
 import option from './circle'
 import {hideLoading, showLoading} from "@/utils/system/loading";
 import {getStaffDistribution} from "@/api/corporation";
-import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+// import {useStore} from "vuex";
+// import store from "@/store";
 
 export default defineComponent({
   components: {
     Chart
   },
   setup() {
-
     const options = reactive(option)
-    const store = useStore()
+    const router=useRouter()
 
     getStaffDistribution()
         .then(res => {
@@ -32,31 +34,32 @@ export default defineComponent({
             const item = res.data[key];
             arr.push(item);
           }
-          const isEqual = (a, b) => {
-              if (Object.keys(a).length !== Object.keys(b).length) {
-                return false;
-              }
-
-              return Object.keys(a).every(i => {
-                return typeof (a[i]) === typeof (b[i]) && (() => {
-                  if (typeof (a[i]) === 'object' && a[i] != null) {
-                    return isEqual(a[i], b[i])
-                  } else {
-                    return a[i] === b[i]
-                  }
-                })()
-              })
-            }
+          // const isEqual = (a, b) => {
+          //   if (Object.keys(a).length !== Object.keys(b).length) {
+          //     return false;
+          //   }
+          //
+          //   return Object.keys(a).every(i => {
+          //     return typeof (a[i]) === typeof (b[i]) && (() => {
+          //       if (typeof (a[i]) === 'object' && a[i] != null) {
+          //         return isEqual(a[i], b[i])
+          //       } else {
+          //         return a[i] === b[i]
+          //       }
+          //     })()
+          //   })
+          // }
+          options.series[0].data=arr
           // store.dispatch('corp/SaveStaffDistribution', arr)
-          if (!isEqual(arr, toRaw(store.state.corp.StaffDistribution))) {
-            console.log('update!')
-            store.dispatch('corp/SaveStaffDistribution', arr)
-            location.reload()
-          }
+          // if (!isEqual(arr, toRaw(store.state.corp.StaffDistribution))) {
+          //   console.log('update!')
+          //   store.dispatch('corp/SaveStaffDistribution', arr)
+          //   location.reload()
+          // }
         })
         .catch(error => {
           hideLoading()
-          // router.push('/404')
+          router.push('/404')
         })
         .finally(() => {
           hideLoading()

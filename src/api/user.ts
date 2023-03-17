@@ -30,7 +30,6 @@ export function loginOutApi() {
   return request({
     url: '/user/out',
     method: 'post',
-    // baseURL: '/mock'
   })
 }
 
@@ -39,16 +38,6 @@ export function passwordChange(data: object) {
   return request({
     url: '/user/pwd_change',
     method: 'post',
-    // baseURL: '/mock',
     data
-  })
-}
-
-/** 获取登录后需要展示的菜单 */
-export function getMenuApi() {
-  return request({
-    url: '/menu/list',
-    method: 'post',
-    // baseURL: '/mock'
   })
 }
