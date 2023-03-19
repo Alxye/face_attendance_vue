@@ -215,4 +215,38 @@ server {
 ```
 ## 2023.3.19 zxx
 * 昨日的问题貌似解决哩，只要把gunicorn的命令修改为`gunicorn -w 2 -b 0.0.0.0:5002 app:app`即可，具体原因与妥当性待模块整合完毕后再深究
+* 发现断开ssh链接后，gunicorn中止不响应，故设置gunicorn服务自启动
+* 配置步骤:
+  
+`创建："/etc/systemd/system/gunicorn.service"`
+```
+[Unit]
+# 描述
+Description=gunicorn for vue3
+# 在网络服务启动后再启动
+After=network.target
+
+[Service]
+User=root
+# 项目文件目录
+WorkingDirectory=/home/project/flask
+# gunicorn启动命令:gunicorn 全局安装了故不需要激活特定环境
+ExecStart=gunicorn -w 2 -b 0.0.0.0:5002 app:app
+# 错误重启
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+`终端命令`
+```
+# 重新加载配置文件
+sudo systemctl daemon-reload
+# 开启服务
+sudo systemctl start gunicorn.service
+# 查看服务状态
+sudo systemctl status gunicorn.service
+# 设置开机启动
+sudo systemctl enable gunicorn.service
+```
 * 后台管理网站在线预览地址：http://101.132.152.202  登录名：1112 密码：123456
