@@ -185,4 +185,34 @@ clock_in_start = time.strptime("2023-01-01 " + data['clock_in_start'], "%Y-%m-%d
 # ./models/department.py ---> department.model 模型构建列属性为Time故更新时分秒
 clock_in_start = db.Column(db.Time, nullable=False)
 ```
-* 本人负责的模块已完成，进入数据库整合阶段
+* 本人负责的模块已完成，进入build vue于云服务器上的阶段
+* 优化了首页piechart中值不同步的问题，以及需要刷新两次的问题，舍弃了简单粗暴的location.reload()方法，改用reactive监听
+## 2023.3.18 zxx
+* 将我部分vue3的功能模块，通过`npm run build`打包成dist资源部署在阿里云ECS中，具体采用了nginx与gunicorn反向代理转发与监听，但仍存在问题--> 
+  * 1. 在flask目录启动` gunicorn -w 2 -b 127.0.0.1:5002 app:app` 运行时，前端不能request给后端，并且timeout
+  * 2. 前端页面虽正常显示，但依赖的是 flask原生程序，非gunicorn，需在flask目录启动`python3 app.py`
+
+`nginx配置文件：/etc/nginx/sites-available/default`
+```
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /home/project/dist;
+
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name 101.132.152.202;
+
+	location /pro-api {
+		root /home/project/dist;
+		# try_files $uri $uri/ =404;
+		index index.html;
+		proxy_set_header X-Real-IP $remote_addr; # flask中获取原始ip需要这个
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # 获取代理ip之前的原始ip
+	}
+}
+```
+## 2023.3.19 zxx
+* 昨日的问题貌似解决哩，只要把gunicorn的命令修改为`gunicorn -w 2 -b 0.0.0.0:5002 app:app`即可，具体原因与妥当性待模块整合完毕后再深究
+* 后台管理网站在线预览地址：http://101.132.152.202  登录名：1112 密码：123456

@@ -12,6 +12,8 @@ import {viteMockServe} from 'vite-plugin-mock'
 import {vitePluginSvg} from "@webxrd/vite-plugin-svg"
 import {resolve} from 'path'
 
+/** 基础域名 */
+
 const pathResolve = (dir: string): any => {
     return resolve(__dirname, ".", dir)
 }
@@ -31,19 +33,7 @@ export default ({command}: ConfigEnv): UserConfigExport => {
         resolve: {
             alias
         },
-        // devServer: {
-        //     host: '0.0.0.0',
-        //     disableHostCheck: true,
-        //     proxy: {
-        //         '/api': {
-        //             target: '0.0.0.0:5000',//后端接口地址，按自己的改
-        //             changeOrigin: true,//是否允许跨越
-        //             pathRewrite: {
-        //                 '^/api': ''
-        //             }
-        //         }
-        //     }
-        // },
+
         server: {
             port: 3001,
             host: '0.0.0.0',
