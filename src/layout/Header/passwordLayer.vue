@@ -1,8 +1,8 @@
 <template>
   <Layer :layer="layer" @confirm="submit" ref="layerDom">
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
-      <el-form-item label="管理员工号：" prop="name">
-        {{form.userId}}
+      <el-form-item label="用户名：" prop="name">
+        管理员
       </el-form-item>
       <el-form-item label="原密码：" prop="old">
         <el-input v-model="form.old" placeholder="请输入原密码" show-password></el-input>
@@ -44,8 +44,8 @@ export default defineComponent({
     const layerDom: Ref<LayerType|null> = ref(null)
     const store = useStore()
     let form = ref({
-      userId: store.state.user.info.staff_id,
-      name: store.state.user.info.name,
+      userId: '123465',
+      name: '',
       old: '',
       new: ''
     })
@@ -58,11 +58,10 @@ export default defineComponent({
         ruleForm.value.validate((valid) => {
           if (valid) {
             let params = {
-              staff_id: form.value.userId,
+              id: form.value.userId,
               old: form.value.old,
               new: form.value.new
             }
-            console.log(params)
             passwordChange(params)
             .then(res => {
               ElMessage({

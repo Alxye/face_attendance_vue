@@ -2,12 +2,12 @@ import request from '@/utils/system/request'
 
 /** 登录api */
 export function loginApi(data: object) {
+  
   return request({
     url: '/user/login',
     method: 'post',
-    // baseURL: '/',
-    // baseURL: '101.132.152.202:5000/',
     data
+    
   })
 }
 
@@ -15,7 +15,7 @@ export function loginApi(data: object) {
 export function getInfoApi(data: object) {
   return request({
     url: '/user/info',
-    method: 'post',
+    method: 'get',
     // baseURL: '/mock',
     data
   })
@@ -33,7 +33,7 @@ export function loginOutApi() {
 /** 获取用户信息Api */
 export function passwordChange(data: object) {
   return request({
-    url: '/user/pwd_change',
+    url: '/user/passwordChange',
     method: 'post',
     // baseURL: '/mock',
     data

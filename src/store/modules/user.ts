@@ -3,12 +3,10 @@ import { ActionContext } from 'vuex'
 
 export interface userState {
   token: string,
-  staff_id: string,
   info: object
 }
 const state = (): userState => ({
   token: '', // 登录token
-  staff_id: '', // 员工id
   info: {},  // 用户信息
 })
 
@@ -16,9 +14,6 @@ const state = (): userState => ({
 const getters = {
   token(state: userState) {
     return state.token
-  },
-  id(state: userState) {
-    return state.staff_id
   }
 }
 
@@ -26,9 +21,6 @@ const getters = {
 const mutations = {
   tokenChange(state: userState, token: string) {
     state.token = token
-  },
-  idChange(state: userState, staff_id: string) {
-    state.staff_id = staff_id
   },
   infoChange(state: userState, info: object) {
     state.info = info
@@ -42,12 +34,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       loginApi(params)
       .then(res => {
-        commit('tokenChange', res.data.token)
-        console.log(res.data)
-        dispatch('getInfo', { staff_id: res.data.info.staff_id })
-        .then(infoRes => {
-          resolve(res.data.token)
-        })
+        console.log(res);
+        commit('tokenChange', res.token)
+        // dispatch('getInfo', { token: res.data.token })
+        // .then(infoRes => {
+        //   resolve(res.data.token)
+        // })
+        resolve(res.token)
       }).catch(err => {
         console.log("catch err!!")
         reject(err)
@@ -66,7 +59,7 @@ const actions = {
   },
 
   // login out the system after user click the loginOut button
-  loginOut({ commit }: ActionContext<userState, userState>) {
+  logout({ commit,dispatch }: ActionContext<userState, userState>) {
     loginOutApi()
     .then(res => {
 

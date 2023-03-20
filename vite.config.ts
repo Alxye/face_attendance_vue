@@ -32,14 +32,21 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       alias
     },
     server: {
-      port: 3001,
+      port: 3000,
       host: '0.0.0.0',
       // port: 5000,
       // host: '101.132.152.202',
       open: true,
       // proxy: { // 代理配置
       //   '/dev': 'https://www.fastmock.site/mock/48cab8545e64d93ff9ba66a87ad04f6b/'
-      // },
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:5001/',	//实际请求地址
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' }
+        },
+       },
+      
     },
     build: {
       rollupOptions: {

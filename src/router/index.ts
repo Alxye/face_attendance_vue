@@ -45,12 +45,10 @@ const whiteList = ['/login']
 // 路由跳转前的监听操作
 router.beforeEach((to, _from, next) => {
     NProgress.start();
-    console.log(store.state.user.info)
-    console.log(store.state.user.token)
     if (store.state.user.token) {
         to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
         if (to.path === '/login') {
-            next('/')
+            next('/attendance/calendar')
             return
         }
         next()

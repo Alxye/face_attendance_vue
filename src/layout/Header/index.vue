@@ -11,6 +11,7 @@
       <!-- 快捷功能按钮 -->
       <div class="function-list">
         <div class="function-list-item hidden-sm-and-down"><Full-screen /></div>
+        <div class="function-list-item"><Word /></div>
         <div class="function-list-item"><SizeChange /></div>
         <div class="function-list-item hidden-sm-and-down"><Theme /></div>
         <div class="function-list-item hidden-sm-and-down"><Github /></div>
@@ -40,6 +41,7 @@ import { defineComponent, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import FullScreen from './functionList/fullscreen.vue'
+import Word from './functionList/word.vue'
 import SizeChange from './functionList/sizeChange.vue'
 import Github from './functionList/github.vue'
 import Theme from './functionList/theme.vue'
@@ -49,7 +51,7 @@ export default defineComponent({
   components: {
     FullScreen,
     Breadcrumb,
-    // Word,
+    Word,
     SizeChange,
     Github,
     Theme,
@@ -71,7 +73,7 @@ export default defineComponent({
 
     // login out the system
     const loginOut = () => {
-      store.dispatch('user/loginOut')
+      store.dispatch('user/logout')
     }
     
     const showPasswordLayer = () => {
