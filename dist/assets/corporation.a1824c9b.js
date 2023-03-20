@@ -1,1 +1,0 @@
-import{x as t}from"./index.344a987f.js";function e(){return t({url:"/corp/info",method:"get"})}function a(){return t({url:"/corp/AdminData",method:"get"})}function n(r){return t({url:"/corp/update",method:"post",data:r})}function u(){return t({url:"/corp/getStaffDistribution",method:"get"})}export{e as a,a as b,u as g,n as u};
