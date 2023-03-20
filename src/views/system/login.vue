@@ -10,7 +10,8 @@
       </div>
 
       <div class="box-inner">
-        <h1>{{ $t('message.system.welcome') }}</h1>
+        <h1 v-if=!form.isRegister>{{ $t('message.system.welcome') }}</h1>
+        <h1 v-if=form.isRegister>欢迎注册</h1>
         <el-form class="form">
           <el-input
               size="large"
@@ -42,6 +43,7 @@
 
           </el-input>
           <el-select
+              v-if=form.isRegister
               v-model="form.name"
               size="large"
               type="text"
@@ -52,12 +54,20 @@
             </el-option>
           </el-select>
           <div style="display: flex">
-            <el-button type="primary" :loading="form.loading" @click="submit" style="width: 100%;margin-top: 20px;"
+            <el-button v-if=!form.isRegister type="primary" :loading="form.loading" @click="submit" style="width: 100%;margin-top: 20px;"
                        size="medium">
               {{ $t('message.system.login') }}
             </el-button>
 
-            <el-button type="primary" :loading="form.loading_register" @click="register"
+            <el-button v-if=!form.isRegister type="primary" :loading="form.loading_register" @click="toregister"
+                       style="width: 100%; margin-top: 20px;margin-left: 10px" size="medium">
+              去注册
+            </el-button>
+            <el-button v-if=form.isRegister type="primary" :loading="form.loading_register" @click="tologin"
+                       style="width: 100%; margin-top: 20px;" size="medium">
+              去登录
+            </el-button>
+            <el-button v-if=form.isRegister type="primary" :loading="form.loading_register" @click="register"
                        style="width: 100%; margin-top: 20px;margin-left: 10px" size="medium">
               注册
             </el-button>
@@ -93,8 +103,10 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    let isRegister=ref(false)
     const form = reactive({
       // name: 'admin',
+      isRegister:false,
       staff_id: '1112',
       password: '123456',
       loading: false,
@@ -156,6 +168,31 @@ export default defineComponent({
         resolve(true)
       })
     }
+    const checkFormLogin = () => {
+      return new Promise((resolve, reject) => {
+        if (form.staff_id === '') {
+          ElMessage.warning({
+            message: '用户名不能为空',
+            type: 'warning'
+          });
+          return;
+        }
+        if (form.password === '') {
+          ElMessage.warning({
+            message: '密码不能为空',
+            type: 'warning'
+          })
+          return;
+        }
+        resolve(true)
+      })
+    }
+    const toregister=()=>{
+      form.isRegister=true
+    }
+    const tologin=()=>{
+      form.isRegister=false
+    }
     const register = () => {
       checkForm()
           .then(() => {
@@ -179,7 +216,7 @@ export default defineComponent({
     }
 
     const submit = () => {
-      checkForm()
+      checkFormLogin()
           .then(() => {
             form.loading = true
             let params = {
@@ -208,7 +245,9 @@ export default defineComponent({
       passwordType,
       passwordTypeChange,
       submit,
-      register
+      register,
+      toregister,
+      tologin
     }
   }
 })

@@ -8,6 +8,24 @@ export function getCorpData() {
   })
 }
 
+/** 获取公司数据api */
+export function getAdminData() {
+  return request({
+    url: '/corp/AdminData',
+    method: 'get'
+  })
+}
+
+/** 获取公司数据api */
+export function delAdmin(data: object) {
+  return request({
+    url: '/corp/DelAdmin',
+    method: 'post',
+    data
+  })
+}
+
+
 /** 更新公司数据api */
 export function updateCorpData(data: object) {
   return request({

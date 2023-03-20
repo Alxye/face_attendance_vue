@@ -1,0 +1,1 @@
+import{v as e}from"./index.1f585e31.js";function n(){return e({url:"/department/info",method:"get"})}function a(t){return e({url:"/department/add",method:"post",data:t})}function d(t){return e({url:"/department/update",method:"post",data:t})}function o(t){return e({url:"/department/delete",method:"post",data:t})}export{o as a,a as b,d,n as g};

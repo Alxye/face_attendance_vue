@@ -42,10 +42,14 @@ export default defineComponent({
 
     console.log(list)
 
+
     list[1].data = nowDate(b)
+
     let params = {
       department_id: store.state.user.info.department_id
     }
+
+
     getDashboardCardData(params)
         .then(res => {
           return new Promise((resolve, reject) => {

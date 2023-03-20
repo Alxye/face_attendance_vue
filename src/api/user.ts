@@ -32,11 +32,35 @@ export function getInfoApi(data: object) {
     data
   })
 }
+/** 获取用户信息Api */
+export function addAdmin(data: object) {
+  return request({
+    url: '/user/addAdmin',
+    method: 'post',
+    data
+  })
+}
+/** 获取用户信息Api */
+export function updateAdmin(data: object) {
+  return request({
+    url: '/user/updateAdmin',
+    method: 'post',
+    data
+  })
+}
+/** 获取用户信息Api */
+export function deleteAdmin(data: object) {
+  return request({
+    url: '/user/deleteAdmin',
+    method: 'post',
+    data
+  })
+}
 
 /** 退出登录Api */
 export function loginOutApi() {
   return request({
-    url: '/user/out',
+    url: '/user/logout',
     method: 'post',
   })
 }

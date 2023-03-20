@@ -20,6 +20,7 @@ import { createNameComponent } from './createNode'
 
 /** 引入需要权限的Modules */
 import Dashboard from './modules/dashboard'
+import Department from './modules/department'
 import Document from './modules/document'
 import Pages from './modules/pages'
 import Menu from './modules/menu'
@@ -34,7 +35,8 @@ import Tab from './modules/tab'
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
   ...Dashboard,
-  ...Document,
+  ...Department,
+  // ...Document,
   // ...Component,
   // ...Pages,
   // ...Menu,

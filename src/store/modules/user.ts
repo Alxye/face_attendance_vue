@@ -37,6 +37,15 @@ const mutations = {
 
 // actions
 const actions = {
+  // update user info
+  update({ commit, dispatch }: ActionContext<userState, userState>, staff_id: any) {
+    return new Promise((resolve, reject) => {
+        // commit('infoChange', params)
+        dispatch('getInfo', { staff_id: staff_id })
+        resolve(staff_id)
+    })
+  },
+
   // login by login.vue
   login({ commit, dispatch }: ActionContext<userState, userState>, params: any) {
     return new Promise((resolve, reject) => {
