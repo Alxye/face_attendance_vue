@@ -15,6 +15,14 @@ export function loginApi(data: object) {
     data
   })
 }
+/** 管理员注册api */
+export function Register(data: object) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data
+  })
+}
 
 /** 获取用户信息Api */
 export function getInfoApi(data: object) {

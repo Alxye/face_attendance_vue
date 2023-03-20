@@ -251,3 +251,5 @@ sudo systemctl status gunicorn.service
 sudo systemctl enable gunicorn.service
 ```
 * 后台管理网站在线预览地址：http://101.132.152.202  登录名：1112 密码：123456
+## 2023.3.20 zxx
+* 悲报：加活了，需新增模块 注册、管理员审核

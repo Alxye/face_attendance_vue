@@ -39,11 +39,30 @@
               <i class="sfont password-icon" :class="passwordType ? 'system-yanjing-guan': 'system-yanjing'"
                  @click="passwordTypeChange"></i>
             </template>
-          </el-input>
 
-          <el-button type="primary" :loading="form.loading" @click="submit" style="width: 100%;" size="medium">
-            {{ $t('message.system.login') }}
-          </el-button>
+          </el-input>
+          <el-select
+              v-model="form.name"
+              size="large"
+              type="text"
+              maxlength="150"
+              style="width: 100%"
+          >
+            <el-option v-for="item in form.departmentList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+          <div style="display: flex">
+            <el-button type="primary" :loading="form.loading" @click="submit" style="width: 100%;margin-top: 20px;"
+                       size="medium">
+              {{ $t('message.system.login') }}
+            </el-button>
+
+            <el-button type="primary" :loading="form.loading_register" @click="register"
+                       style="width: 100%; margin-top: 20px;margin-left: 10px" size="medium">
+              注册
+            </el-button>
+          </div>
+
         </el-form>
         <div class="fixed-top-right">
           <select-lang/>
@@ -54,15 +73,17 @@
 </template>
 
 <script lang="ts">
-import { systemTitle, systemSubTitle } from '@/config'
-import { defineComponent, ref, reactive } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
-import type { RouteLocationRaw  } from 'vue-router'
-import { getAuthRoutes } from '@/router/permission'
-import { ElMessage } from 'element-plus'
+import {systemTitle, systemSubTitle} from '@/config'
+import {defineComponent, ref, reactive} from 'vue'
+import {useStore} from 'vuex'
+import {useRouter, useRoute} from 'vue-router'
+import type {RouteLocationRaw} from 'vue-router'
+import {getAuthRoutes} from '@/router/permission'
+import {ElMessage} from 'element-plus'
 // import selectLang from '@/layout/Header/functionList/word.vue'
 import loginLeftPng from '@/assets/login/left.jpg';
+import {getDepartmentInfo} from "@/api/department";
+import {Register} from "@/api/user";
 
 export default defineComponent({
   // components: {
@@ -76,10 +97,35 @@ export default defineComponent({
       // name: 'admin',
       staff_id: '1112',
       password: '123456',
-      loading: false
+      loading: false,
+      loading_register: false,
+      name: "请选择部门",
+      departmentList: [
+        ''
+      ]
     })
 
-      // const store=useStore()
+    function fetchDepartment() {
+      getDepartmentInfo()
+          .then(res => {
+            console.log(res)
+            let arr = [];
+            for (const key in res.data) {
+              if (!res.data.hasOwnProperty(key)) {
+                continue;
+              }
+              const item = res.data[key].name;
+              arr.push(item);
+            }
+            console.log(arr)
+            console.log(typeof (arr))
+            form.departmentList = arr
+          })
+    }
+
+    fetchDepartment()
+
+    // const store=useStore()
     const passwordType = ref('password')
     const passwordTypeChange = () => {
       passwordType.value === '' ? passwordType.value = 'password' : passwordType.value = ''
@@ -100,30 +146,59 @@ export default defineComponent({
           })
           return;
         }
+        if (form.name === '请选择部门') {
+          ElMessage.warning({
+            message: '请选择部门',
+            type: 'warning'
+          });
+          return;
+        }
         resolve(true)
       })
     }
+    const register = () => {
+      checkForm()
+          .then(() => {
+            form.loading = true
+            let params = {
+              staff_id: form.staff_id,
+              password: form.password,
+              department_name: form.name
+            }
+            Register(params)
+                .then(res => {
+                  ElMessage({
+                    type: 'success',
+                    message: '注册成功'
+                  })
+                  location.reload()
+                }).finally(() => {
+              form.loading = false
+            })
+          })
+    }
+
     const submit = () => {
       checkForm()
-      .then(() => {
-        form.loading = true
-        let params = {
-          staff_id: form.staff_id,
-          password: form.password
-        }
-        store.dispatch('user/login', params)
-        .then(async () => {
-          ElMessage.success({
-            message: '登录成功',
-            type: 'success',
-            showClose: true,
-            duration: 1000
+          .then(() => {
+            form.loading = true
+            let params = {
+              staff_id: form.staff_id,
+              password: form.password
+            }
+            store.dispatch('user/login', params)
+                .then(async () => {
+                  ElMessage.success({
+                    message: '登录成功',
+                    type: 'success',
+                    showClose: true,
+                    duration: 1000
+                  })
+                  location.reload()
+                }).finally(() => {
+              form.loading = false
+            })
           })
-          location.reload()
-        }).finally(() => {
-          form.loading = false
-        })
-      })
     }
     return {
       loginLeftPng,
@@ -132,7 +207,8 @@ export default defineComponent({
       form,
       passwordType,
       passwordTypeChange,
-      submit
+      submit,
+      register
     }
   }
 })
@@ -176,7 +252,7 @@ export default defineComponent({
         top: 0;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(rgba(0,204,222,0.8), rgba(51,132,224,0.8));
+        background-image: linear-gradient(rgba(0, 204, 222, 0.8), rgba(51, 132, 224, 0.8));
         text-align: center;
         color: #fff;
         font-size: 1.8rem;
