@@ -165,7 +165,8 @@ export default defineComponent({
     }
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
-      if(layer.staff_id==store.state.user.info.staff_id){
+      console.log(row)
+      if(row.staff_id==store.state.user.info.staff_id){
         ElMessage({
           type: 'warning',
           message: '无权限！'
