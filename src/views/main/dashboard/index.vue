@@ -22,9 +22,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-  .box {
-    padding: 0 15px 15px 15px;
-  }
-</style>
