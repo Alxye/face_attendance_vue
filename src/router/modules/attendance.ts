@@ -5,7 +5,7 @@ const route: Route[] = [
   {
     path: '/attendance',
     component: Layout,
-    redirect: '/attendance/ma',
+    redirect: '/attendance/index',
     meta: { title: '考勤管理', icon: 'sfont system-document' },
     children: [
       {
@@ -18,11 +18,11 @@ const route: Route[] = [
         component: createNameComponent(() => import('@/views/main/attendance/calendar.vue')),
         meta: { title: '日历' }
       },
-      {
-        path: 'department',
-        component: createNameComponent(() => import('@/views/main/attendance/department.vue')),
-        meta: { title: '部门' }
-      },
+      // {
+      //   path: 'department',
+      //   component: createNameComponent(() => import('@/views/main/attendance/department.vue')),
+      //   meta: { title: '部门' }
+      // },
       {
         path: 'index',
         component: createNameComponent(() => import('@/views/main/attendance/index.vue')),
