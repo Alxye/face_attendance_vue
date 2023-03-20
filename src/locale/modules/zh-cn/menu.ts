@@ -8,6 +8,9 @@ export default {
       name: 'dashboard',
       index: '首页'
     },
+    employee:{
+      name:'员工管理'
+    },
     system: {
       name: '系统目录',
       redirect: '重定向页面',

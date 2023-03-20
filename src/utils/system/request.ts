@@ -4,10 +4,12 @@ import { ElMessage } from 'element-plus'
 const baseURL: any = import.meta.env.VITE_BASE_URL
 
 const service: AxiosInstance = axios.create({
-  baseURL: "http://101.132.152.202:5000",
-  timeout: 5000
+  baseURL: "api",
+  timeout: 5000, 
+  // headers: {
+  //   'Content-Type':'application/x-www-form-urlencoded'
+  // }
 })
-
 // 请求前的统一处理
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
@@ -47,7 +49,7 @@ function showError(error: any) {
   // token过期，清除本地数据，并跳转至登录页面
   if (error.code === 403) {
     // to re-login
-    store.dispatch('user/loginOut')
+    store.dispatch('user/logout')
   } else {
     ElMessage({
       message: error.msg || error.message || '服务异常',

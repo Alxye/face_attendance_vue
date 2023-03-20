@@ -30,20 +30,27 @@ import Chart from './modules/chart'
 import Print from './modules/print'
 import Community from './modules/community'
 import Tab from './modules/tab'
+import employee from './modules/employee'
+import appeal from './modules/appeal'
+import attendance from './modules/attendance'
 
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
-  ...Dashboard,
-  ...Document,
-  ...Component,
-  ...Pages,
-  ...Menu,
-  ...Directive,
-  ...Chart,
-  ...SystemManage,
-  ...Print,
-  ...Community,
-  ...Tab,
+  // ...Dashboard,
+  ...attendance,
+  // ...Document,
+  // ...Component,
+  // ...Pages,
+  // ...Menu,
+  // ...Directive,
+  // ...Chart,
+  // ...SystemManage,
+  // ...Print,
+  // ...Community,
+  // ...Tab,
+  ...employee,
+  ...appeal,
+  
 ]
 
 /** 
@@ -69,6 +76,7 @@ async function addRoutes() {
 export async function getAuthRoutes() {
   // 判断token是否存在，存在则调用添加路由的方法
   if (store.state.user.token) {
+    console.log("routing");
     await addRoutes()
   }
 }
