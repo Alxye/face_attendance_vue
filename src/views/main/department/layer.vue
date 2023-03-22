@@ -3,6 +3,8 @@
     <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
       <el-form-item label="管理员工号：" prop="staff_id">
         <el-input v-model="form.staff_id" placeholder="请输入工号"></el-input>
+<!--        <el-input v-if="!props.layer.row" v-model="form.staff_id" placeholder="请输入工号"></el-input>-->
+<!--        <el-col  v-if="props.layer.row" >{{form.staff_id}}</el-col>-->
       </el-form-item>
       <!--      <el-form-item label="管理员初始密码：" prop="password">-->
       <!--        <el-input v-model="form.password" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入密码"></el-input>-->
@@ -26,13 +28,13 @@
 
 <script lang="ts">
 import type {LayerType} from '@/components/layer/index.vue'
+import Layer from '@/components/layer/index.vue'
 import type {Ref} from 'vue'
+import {defineComponent, ref} from 'vue'
 import type {ElFormItemContext} from 'element-plus/lib/el-form/src/token'
-import {defineComponent, reactive, ref} from 'vue'
 import {addAdmin, updateAdmin} from '@/api/user'
 // import { selectData, radioData } from './enum'
-import {selectData2, radioData} from './enum'
-import Layer from '@/components/layer/index.vue'
+import {radioData} from './enum'
 import {hideLoading, showLoading} from "@/utils/system/loading";
 import {getDepartmentInfo} from "@/api/department";
 import {useStore} from "vuex";
@@ -59,10 +61,10 @@ export default defineComponent({
     const ruleForm: Ref<ElFormItemContext | null> = ref(null)
     const layerDom: Ref<LayerType | null> = ref(null)
     let form = ref({
+      staff_id_old: '',
       staff_id: '',
       department_id: '',
-      type: '',
-      needUpdate:false
+      type: ''
     })
     let selectData = ref([
       {}
@@ -77,8 +79,10 @@ export default defineComponent({
 
     function init() { // 用于判断新增还是编辑功能
       if (props.layer.row) {
+        console.log(props.layer.row)
         form.value = JSON.parse(JSON.stringify(props.layer.row)) // 数量量少的直接使用这个转
-        form.value.needUpdate = form.value.staff_id == store.state.user.info.staff_id;
+        form.value.staff_id_old = form.value.staff_id
+        console.log(form.value)
       } else {
 
       }
@@ -122,7 +126,8 @@ export default defineComponent({
       layerDom,
       ruleForm,
       selectData,
-      radioData
+      radioData,
+      props
     }
   },
   methods: {
@@ -157,6 +162,7 @@ export default defineComponent({
     },
     // 编辑提交事件
     updateForm(params: object) {
+      console.log(params)
       // const store=useStore()
       updateAdmin(params)
           .then(res => {

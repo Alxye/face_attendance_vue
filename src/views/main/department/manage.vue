@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container">
-    <h1 style="margin-top: 30px">部门信息管理</h1>
+<!--    <h1 style="margin-top: 30px">部门信息管理</h1>-->
     <el-row :gutter="12">
       <el-col :span="12" class="el-col-tree-box">
         <h2>部门结构</h2>

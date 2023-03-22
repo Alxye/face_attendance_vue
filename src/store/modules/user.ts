@@ -41,6 +41,7 @@ const actions = {
   update({ commit, dispatch }: ActionContext<userState, userState>, staff_id: any) {
     return new Promise((resolve, reject) => {
         // commit('infoChange', params)
+
         dispatch('getInfo', { staff_id: staff_id })
         resolve(staff_id)
     })
@@ -51,6 +52,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       loginApi(params)
       .then(res => {
+        // tyz
+        // console.log(res);
+        // localStorage.setItem('did', JSON.stringify(res.did))
+
         commit('tokenChange', res.data.token)
         dispatch('getInfo', { staff_id: res.data.info.staff_id })
         .then(infoRes => {
@@ -67,6 +72,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfoApi(params)
       .then(res => {
+        localStorage.setItem('did', JSON.stringify(res.data.info.department_id))
         commit('infoChange', res.data.info)
         resolve(res.data.info)
       })
@@ -83,6 +89,7 @@ const actions = {
 
     })
     .finally(() => {
+      localStorage.removeItem('did');
       localStorage.removeItem('tabs')
       localStorage.removeItem('vuex')
       sessionStorage.removeItem('vuex')

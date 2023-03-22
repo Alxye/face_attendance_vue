@@ -53,6 +53,7 @@ export default defineComponent({
     getDashboardCardData(params)
         .then(res => {
           return new Promise((resolve, reject) => {
+            console.log(res.data)
             list[0].data = res.data.department_name
             list[2].data = res.data.appealstaffcount
             list[3].data = res.data.appealattendancecount

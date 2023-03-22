@@ -73,7 +73,8 @@ export default defineComponent({
     const layer: LayerInterface = reactive({
       show: false,
       title: '新增',
-      showButton: true
+      showButton: true,
+      width:'30%'
     })
     // 分页参数, 供table使用
     const page: Page = reactive({

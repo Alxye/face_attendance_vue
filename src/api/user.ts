@@ -73,3 +73,13 @@ export function passwordChange(data: object) {
     data
   })
 }
+
+
+/** 获取登录后需要展示的菜单 */
+export function getMenuApi() {
+  return request({
+    url: '/menu/list',
+    method: 'post',
+    // baseURL: '/mock'
+  })
+}

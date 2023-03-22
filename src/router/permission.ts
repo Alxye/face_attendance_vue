@@ -21,6 +21,9 @@ import { createNameComponent } from './createNode'
 /** 引入需要权限的Modules */
 import Dashboard from './modules/dashboard'
 import Department from './modules/department'
+import employee from './modules/employee'
+import appeal from './modules/appeal'
+import attendance from './modules/attendance'
 import Document from './modules/document'
 import Pages from './modules/pages'
 import Menu from './modules/menu'
@@ -36,6 +39,9 @@ import Tab from './modules/tab'
 const asyncRoutes: Route[] = [
   ...Dashboard,
   ...Department,
+  ...attendance,
+  ...employee,
+  ...appeal,
   // ...Document,
   // ...Component,
   // ...Pages,

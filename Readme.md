@@ -256,3 +256,28 @@ sudo systemctl enable gunicorn.service
 * 下班完成了管理员注册、管理员审核、新增管理员、编辑管理员、删除管理员的活儿，叉会儿腰.jpg
 * 又又又又发现一个bug，解决办法：本人不能修改本人的工号、部门信息，并且本人不能删除本人！！！
 * 完毕！待周三开始微信的后端整合
+## 2023.3.22 zxx
+* 模块整合Vue
+* 修复了需许多的bug：<br/>
+  * 1、员工管理模块：利用localstorage的did，传入后端按部门分类查询员工列表<br/>
+  * 2、修正了申诉管理中无对应考勤条目的问题，创建条目！<br/>
+  * 3、协同tyz完善了考勤管理中员工表时间显示的问题以及新增考勤条目、编辑考勤条目数据库错误的问题，引入did使得管理员仅能管理本部门员工<br/>
+  * 4、对于导出功能与原模块的冲突执行纠正，具体代码调整位置：
+   `src/utils/system/request.ts`
+    ```angular2html
+      (response: AxiosResponse) => {
+          const res = response.data
+          if (res.code === 200) {
+              return res
+          } else {
+              if (response.status === 200 && !res.hasOwnProperty('code')) {
+                  return response
+              }
+              showError(res)
+              return Promise.reject(res)
+          }
+      },
+    ```
+* 明日目标：
+  * 1、合并微信后端flask+合并考勤管理绘图界面Vue页面
+  * 2、程序调试，测试，部署
