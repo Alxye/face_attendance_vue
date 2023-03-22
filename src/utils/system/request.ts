@@ -5,6 +5,7 @@ const baseURL: any = import.meta.env.VITE_BASE_URL
 
 const service: AxiosInstance = axios.create({
   baseURL: "api",
+  //baseURL: "http://101.132.152.202:5050/api",
   timeout: 5000,
   // headers: {
   //   'Content-Type':'application/x-www-form-urlencoded'
@@ -29,10 +30,16 @@ service.interceptors.response.use(
   (response: AxiosResponse) => {
    
     const res = response.data
+    console.log(res.code);
+    console.log(typeof(res));
     if (res.code === 200) {
       return res
     } else {
       if (response.status==200) {
+        if (res.code === 403) {
+          //
+        }
+        else
         return response
       }
       showError(res)

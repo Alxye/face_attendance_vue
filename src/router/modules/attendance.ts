@@ -26,7 +26,12 @@ const route: Route[] = [
       {
         path: 'index',
         component: createNameComponent(() => import('@/views/main/attendance/index.vue')),
-        meta: { title: '考勤图' }
+        meta: { title: '签到图' }
+      },
+      {
+        path: 'index2',
+        component: createNameComponent(() => import('@/views/main/attendance/index2.vue')),
+        meta: { title: '签退图' }
       }
     ]
   }

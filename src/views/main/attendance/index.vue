@@ -11,7 +11,7 @@ import { useEventListener } from "@vueuse/core"; //引入监听函数，监听�
 import * as echarts from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { LineChart } from "echarts/charts";
-import { getCharts } from "@/api/attendance";
+import { getCheckin,getCheckin0,getCheckin2,getCheckout } from "@/api/attendance";
 import {
   TitleComponent,
   TooltipComponent,
@@ -32,7 +32,69 @@ export default defineComponent({
       let params = {
         did: localStorage.getItem("did"),
       };
-      getCharts(params)
+      getCheckin2(params)
+        .then((res) => {
+          console.log(res);
+          options.series[2].data = res.data
+          var xdata=[]
+          for(var i=1;i<31;i++)
+          {
+            xdata.push(i.toString())
+          }
+          options.xAxis[0].data=xdata
+          console.log(options.xAxis[0].data);
+          echarts.use([
+            TitleComponent,
+            TooltipComponent,
+            GridComponent,
+            LineChart,
+            ToolboxComponent,
+            LegendComponent,
+            CanvasRenderer,
+          ]);
+          myEchart = echarts.init(dom.value);
+
+          myEchart.setOption(options);
+          useEventListener("resize", () => myEchart!.resize());
+        })
+        .catch((error) => {
+          console.log("获取图表数据出错");
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+      getCheckin0(params)
+        .then((res) => {
+          console.log(res);
+          options.series[1].data = res.data
+          var xdata=[]
+          for(var i=1;i<31;i++)
+          {
+            xdata.push(i.toString())
+          }
+          options.xAxis[0].data=xdata
+          console.log(options.xAxis[0].data);
+          echarts.use([
+            TitleComponent,
+            TooltipComponent,
+            GridComponent,
+            LineChart,
+            ToolboxComponent,
+            LegendComponent,
+            CanvasRenderer,
+          ]);
+          myEchart = echarts.init(dom.value);
+
+          myEchart.setOption(options);
+          useEventListener("resize", () => myEchart!.resize());
+        })
+        .catch((error) => {
+          console.log("获取图表数据出错");
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+      getCheckin(params)
         .then((res) => {
           console.log(res);
           options.series[0].data = res.data
@@ -63,6 +125,8 @@ export default defineComponent({
         .finally(() => {
           loading.value = false;
         });
+        
+        
     };
     onBeforeMount(() => {
       getdata();

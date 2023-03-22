@@ -36,9 +36,30 @@ export function del(data: object) {
   })
 }
 
-export function getCharts(data:object) {
+export function getCheckin(data:object) {
   return request({
-    url: '/attendance/dayChart',
+    url: '/attendance/chartCheckin',
+    method: 'post',
+    data
+  })
+}
+export function getCheckin0(data:object) {
+  return request({
+    url: '/attendance/chartCheckin0',
+    method: 'post',
+    data
+  })
+}
+export function getCheckin2(data:object) {
+  return request({
+    url: '/attendance/chartCheckin2',
+    method: 'post',
+    data
+  })
+}
+export function getCheckout(data:object) {
+  return request({
+    url: '/attendance/chartCheckout',
     method: 'post',
     data
   })

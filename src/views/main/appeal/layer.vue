@@ -7,13 +7,19 @@
       label-width="120px"
       style="margin-right: 30px"
     >
-      <el-form-item label="编号：" prop="id" >
-        <el-input v-model="form.id" placeholder="请输入名称" :disabled="true"></el-input>
+      <el-form-item label="编号：" prop="id">
+        <el-input
+          v-model="form.id"
+          placeholder="请输入名称"
+          :disabled="true"
+        ></el-input>
       </el-form-item>
       <el-form-item label="驳回理由：" prop="reject_reason">
-        <el-input v-model="form.reject_reason" placeholder="驳回原因"></el-input>
+        <el-input
+          v-model="form.reject_reason"
+          placeholder="驳回原因"
+        ></el-input>
       </el-form-item>
-    
     </el-form>
   </Layer>
 </template>
@@ -80,7 +86,13 @@ export default defineComponent({
       if (this.ruleForm) {
         this.ruleForm.validate((valid) => {
           if (valid) {
-            let params = this.form;
+            let params = {
+              id:this.form.id,
+              reject_reason:this.form.reject_reason,
+              staff_id:'',
+              date:'',
+              time_state:''
+            }
             console.log(params);
             if (this.layer.row) {
               this.updateForm(params);
