@@ -2,6 +2,7 @@
   <div class="layout-container">
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
+        <el-button @click="excel">导出</el-button>
         <el-button type="primary" :icon="Plus" @click="handleAdd">{{
           $t("message.common.add")
         }}</el-button>
@@ -39,18 +40,38 @@
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="true"
+        :showIndex="false"
         :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="staff_id" label="工号" align="center" />
-        <el-table-column prop="date" label="日期" align="center" />
-        <el-table-column prop="am_type" label="签到" align="center" :formatter="changeType_am" />
+        <el-table-column
+          prop="date"
+          label="日期"
+          :sortable="true"
+          :sort-method="sortByDate"
+          align="center"
+        />
+        <el-table-column
+          prop="am_type"
+          label="签到"
+          align="center"
+          :formatter="changeType_am"
+        />
         <el-table-column prop="clock_in_time" label="上班时间" align="center" />
-        <el-table-column prop="pm_type" label="签退" align="center" :formatter="changeType_pm"/>
-        <el-table-column prop="clock_out_time" label="下班时间" align="center" />
+        <el-table-column
+          prop="pm_type"
+          label="签退"
+          align="center"
+          :formatter="changeType_pm"
+        />
+        <el-table-column
+          prop="clock_out_time"
+          label="下班时间"
+          align="center"
+        />
         <!-- <el-table-column prop="salary" label="日期" align="center" /> -->
 
         <el-table-column
@@ -85,37 +106,39 @@
 import { defineComponent, ref, reactive } from "vue";
 import Table from "@/components/table/index.vue";
 import { Page } from "@/components/table/type";
-import { getData, del } from "@/api/attendance";
+import { getData, del, getExcel } from "@/api/attendance";
 import Layer from "./layer.vue";
 import { ElMessage } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
 import { selectData, radioData, typeData } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 // 2 获取实例
 
 export default defineComponent({
   name: "crudTable",
   filter: {},
-  
+
   components: {
     Table,
     Layer,
   },
-  
+
   setup() {
-    const route = useRoute()
-// 3 解构赋值
-const { query:{date} } = route
-    const init=()=>{
-       if (date){
+    const route = useRoute();
+    // 3 解构赋值
+    const {
+      query: { date },
+    } = route;
+    const init = () => {
+      if (date) {
         console.log(date);
-       }
+      }
     };
-    const changeType_am = (row: any)=>{
+    const changeType_am = (row: any) => {
       return row.am_type == 0 ? "已签" : row.am_type == 1 ? "迟到" : "未签";
     };
-    const changeType_pm = (row: any)=>{
+    const changeType_pm = (row: any) => {
       return row.pm_type == 0 ? "已签" : row.pm_type == 1 ? "迟到" : "未签";
     };
     // 存储搜索用的数据
@@ -140,10 +163,49 @@ const { query:{date} } = route
     const handleSelectionChange = (val: []) => {
       chooseData.value = val;
     };
+    const sortByDate = (obj1: any, obj2: any) => {
+      let val1 = obj1.date;
+      let val2 = obj2.date;
+      return val1 - val2;
+    };
+    const sortByAmtype = (obj1: any, obj2: any) => {
+      let val1 = obj1.am_type;
+      let val2 = obj2.am_type;
+      return val1 - val2;
+    };
+    const excel = () => {
+      
+      let params = {
+        did:localStorage.getItem('did'),
+        date:date
+      };
+      if(date==null)
+      {
+        params = {
+        did:localStorage.getItem('did'),
+        date:""
+      };
+      }
+      getExcel(params)
+        .then((res) => {
+          const filename = res.headers["content-disposition"]
+            .split("filename=")[1]
+            .split("; filename")[0];
+          const url = window.URL.createObjectURL(res.data);
+          const link = document.createElement("a");
+          link.style.display = "none";
+          link.href = url;
+          link.setAttribute("download", "导出" + filename);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
     // 获取表格数据
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页
     const getTableData = (init: boolean) => {
-     
       loading.value = true;
       if (init) {
         page.index = 1;
@@ -152,16 +214,17 @@ const { query:{date} } = route
         page: page.index,
         pageSize: page.size,
         ...query,
-        date:date,
+        date: date,
+        did:localStorage.getItem('did')
       };
-      if(date==null)
-      {
+      if (date == null) {
         params = {
-        page: page.index,
-        pageSize: page.size,
-        ...query,
-        date:'',
-      };
+          page: page.index,
+          pageSize: page.size,
+          ...query,
+          date: "",
+          did:localStorage.getItem('did')
+        };
       }
       getData(params)
         .then((res) => {
@@ -239,6 +302,9 @@ const { query:{date} } = route
       getTableData,
       changeType_am,
       changeType_pm,
+      excel,
+      sortByDate,
+      sortByAmtype,
     };
   },
 });

@@ -35,3 +35,19 @@ export function del(data: object) {
     data
   })
 }
+
+export function getCharts(data:object) {
+  return request({
+    url: '/attendance/dayChart',
+    method: 'post',
+    data
+  })
+}
+export function getExcel(data:object) {
+  return request({
+    url: '/attendance/excel',
+    method: 'post',
+    data,
+    responseType: "blob"
+  })
+}
