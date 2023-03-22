@@ -263,6 +263,7 @@ export default defineComponent({
       console.log(data[0].staff_id);
       let params = {
         staff_id: data[0].staff_id,
+        date:data[0].date
       };
       del(params).then((res) => {
         ElMessage({

@@ -197,12 +197,15 @@ export default defineComponent({
         getTableData(tableData.value.length === 1 ? true : false);
       });
     };
-    //驳回
+    //同意
     const handleAllow = (data: any) => {
       console.log(data[0].id);
       let params = {
         id: data[0].id,
-        reject_reason:""
+        reject_reason:"",
+        staff_id:data[0].staff_id,
+        date:data[0].date,
+        time_state:data[0].time_state
       };
       update(params).then((res) => {
         ElMessage({

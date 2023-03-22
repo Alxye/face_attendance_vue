@@ -8,10 +8,16 @@
       style="margin-right: 30px"
     >
       <el-form-item label="工号：" prop="staff_id">
-        <el-input v-model="form.staff_id" placeholder="请输入名称"></el-input>
+        <el-input v-model="form.staff_id" placeholder="请输入工号"></el-input>
       </el-form-item>
       <el-form-item label="日期：" prop="date">
-        <el-input v-model="form.date" placeholder="只能输入正整数"></el-input>
+        <!-- <el-input v-model="form.date" placeholder="只能输入正整数"></el-input> -->
+        <el-date-picker
+        v-model="form.date"
+        type="date"
+        placeholder="选择日期"
+        value-format="YYYY-MM-DD"
+      />
       </el-form-item>
       <el-form-item label="签到：" prop="am_type">
         <el-radio-group v-model="form.am_type">
@@ -23,8 +29,14 @@
           >
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="签到时间：" prop="clock_in_time">
-        <el-input v-model="form.clock_in_time" placeholder="输入签到时间"></el-input>
+      <el-form-item label="签到时间：" prop="clock_in_time" >
+        <!-- <el-input v-model="form.clock_in_time" placeholder="输入签到时间"></el-input> -->
+        <el-date-picker
+        v-model="form.clock_in_time"
+        type="datetime"
+        placeholder="选择日期和时间"
+        value-format="YYYY-MM-DD h:m:s"
+      />
       </el-form-item>
       <el-form-item label="签退：" prop="pm_type">
         <el-radio-group v-model="form.pm_type">
@@ -36,8 +48,14 @@
           >
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="签退时间：" prop="clock_out_time">
-        <el-input v-model="form.clock_out_time" placeholder="输入签退时间"></el-input>
+      <el-form-item label="签退时间：" prop="clock_out_time" value-format="yyyy-MM-dd hh:mm:ss">
+        <!-- <el-input v-model="form.clock_out_time" placeholder="输入签退时间"></el-input> -->
+        <el-date-picker
+        v-model="form.clock_out_time"
+        type="datetime"
+        placeholder="选择日期和时间"
+        value-format="YYYY-MM-DD h:m:s"
+      />
       </el-form-item>
       <!-- <el-form-item label="选择器：" prop="select">
                 <el-select v-model="form.choose" placeholder="请选择" clearable>
@@ -73,7 +91,9 @@ export default defineComponent({
       },
     },
   },
+  
   setup(props, ctx) {
+    const defaultTime = new Date(2000, 1, 1, 12, 0, 0)
     const ruleForm: Ref<ElFormItemContext | null> = ref(null);
     const layerDom: Ref<LayerType | null> = ref(null);
     let form = ref({
@@ -107,6 +127,7 @@ export default defineComponent({
       selectData,
       typeData,
       signData,
+      defaultTime,
     };
   },
   methods: {
@@ -115,6 +136,7 @@ export default defineComponent({
         this.ruleForm.validate((valid) => {
           if (valid) {
             let params = this.form;
+            console.log(params);
             if (this.layer.row) {
               this.updateForm(params);
             } else {
