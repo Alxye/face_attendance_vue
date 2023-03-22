@@ -39,7 +39,7 @@
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="true"
+        :showIndex="false"
         :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
@@ -48,6 +48,8 @@
         <el-table-column prop="id" label="编号" align="center" />
         <el-table-column prop="staff_id" label="工号" align="center" />
         <el-table-column prop="date" label="日期" align="center" />
+        <el-table-column prop="time_state" label="时间" align="center" :formatter="changeState" />
+        <el-table-column prop="category" label="类型" align="center" :formatter="changeCategory" />
         <el-table-column prop="appeal_reason" label="申诉理由" align="center" />
         <el-table-column prop="state" label="申诉状态" align="center" :formatter="changeType"/>
         <el-table-column prop="reject_reason" label="驳回理由" align="center" />
@@ -106,6 +108,12 @@ export default defineComponent({
     Layer,
   },
   setup() {
+    const changeCategory= (row: any)=>{
+      return row.time_state == 0 ? "打卡失败" : "考勤补卡";
+    };
+    const changeState= (row: any)=>{
+      return row.time_state == 0 ? "上班" : "下班";
+    };
     const changeType = (row: any)=>{
       return row.state == 0 ? "待审核" : row.state == 1 ? "同意" : "驳回";
     };
@@ -142,6 +150,7 @@ export default defineComponent({
         page: page.index,
         pageSize: page.size,
         ...query,
+        did:localStorage.getItem('did'),
       };
       getData(params)
         .then((res) => {
@@ -200,6 +209,7 @@ export default defineComponent({
           type: "success",
           message: "操作成功",
         });
+        getTableData(tableData.value.length === 1 ? true : false);
       });
     };
     // 新增弹窗功能
@@ -231,6 +241,8 @@ export default defineComponent({
       handleDel,
       getTableData,
       changeType,
+      changeState,
+      changeCategory,
       handleAllow,
     };
   },

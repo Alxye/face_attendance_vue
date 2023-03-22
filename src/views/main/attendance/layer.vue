@@ -24,7 +24,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="签到时间：" prop="clock_in_time">
-        <el-input v-model="form.clock_in_time" placeholder="只能输入正整数"></el-input>
+        <el-input v-model="form.clock_in_time" placeholder="输入签到时间"></el-input>
       </el-form-item>
       <el-form-item label="签退：" prop="pm_type">
         <el-radio-group v-model="form.pm_type">
@@ -37,7 +37,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="签退时间：" prop="clock_out_time">
-        <el-input v-model="form.clock_out_time" placeholder="只能输入正整数"></el-input>
+        <el-input v-model="form.clock_out_time" placeholder="输入签退时间"></el-input>
       </el-form-item>
       <!-- <el-form-item label="选择器：" prop="select">
                 <el-select v-model="form.choose" placeholder="请选择" clearable>

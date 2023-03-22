@@ -5,7 +5,7 @@ const route: Route[] = [
   {
     path: '/attendance',
     component: Layout,
-    redirect: '/attendance/index',
+    redirect: '/attendance/calendar',
     meta: { title: '考勤管理', icon: 'sfont system-document' },
     children: [
       {
@@ -26,7 +26,7 @@ const route: Route[] = [
       {
         path: 'index',
         component: createNameComponent(() => import('@/views/main/attendance/index.vue')),
-        meta: { title: '入口' }
+        meta: { title: '考勤图' }
       }
     ]
   }

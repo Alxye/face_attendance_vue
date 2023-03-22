@@ -7,37 +7,13 @@
       label-width="120px"
       style="margin-right: 30px"
     >
-      <el-form-item label="工号：" prop="id">
-        <el-input v-model="form.id" placeholder="请输入名称"></el-input>
+      <el-form-item label="编号：" prop="id" >
+        <el-input v-model="form.id" placeholder="请输入名称" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="驳回理由：" prop="reject_reason">
-        <el-input v-model="form.reject_reason" placeholder="只能输入正整数"></el-input>
+        <el-input v-model="form.reject_reason" placeholder="驳回原因"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="年龄：" prop="age">
-        <el-input v-model="form.age" placeholder="只能输入正整数"></el-input>
-      </el-form-item>
-      <el-form-item label="部门：" prop="department_id">
-        <el-input
-          v-model="form.department_id"
-          oninput="value=value.replace(/[^\d]/g,'')"
-          placeholder="只能输入正整数"
-        ></el-input>
-      </el-form-item> -->
-      <!-- <el-form-item label="选择器：" prop="select">
-                <el-select v-model="form.choose" placeholder="请选择" clearable>
-                      <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                  </el-select>
-              </el-form-item> -->
-      <!-- <el-form-item label="类型：" prop="type">
-        <el-radio-group v-model="form.type">
-          <el-radio
-            v-for="item in typeData"
-            :key="item.value"
-            :label="item.value"
-            >{{ item.label }}</el-radio
-          >
-        </el-radio-group>
-      </el-form-item> -->
+    
     </el-form>
   </Layer>
 </template>

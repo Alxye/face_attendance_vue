@@ -145,6 +145,7 @@ export default defineComponent({
         page: page.index,
         pageSize: page.size,
         ...query,
+        did:localStorage.getItem('did')
       };
       getData(params)
         .then((res) => {
@@ -205,6 +206,9 @@ export default defineComponent({
       layer.show = true;
     };
     getTableData(true);
+    //查找部门
+    var data2 = localStorage.getItem('did');
+        console.log(data2);
     return {
       Plus,
       Search,
