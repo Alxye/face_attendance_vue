@@ -136,10 +136,10 @@ export default defineComponent({
       }
     };
     const changeType_am = (row: any) => {
-      return row.am_type == 0 ? "已签" : row.am_type == 1 ? "迟到" : "未签";
+      return row.am_type == 0 ? "未签" : row.am_type == 1 ? "已签" : "迟到";
     };
     const changeType_pm = (row: any) => {
-      return row.pm_type == 0 ? "已签" : row.pm_type == 1 ? "迟到" : "未签";
+      return row.pm_type == 0 ? "未签" : row.pm_type == 1 ? "已签" : "早退";
     };
     // 存储搜索用的数据
     const query = reactive({
