@@ -43,6 +43,37 @@ export function getCharts(data:object) {
     data
   })
 }
+
+
+export function getCheckin(data:object) {
+  return request({
+    url: '/attendance/chartCheckin',
+    method: 'post',
+    data
+  })
+}
+export function getCheckin0(data:object) {
+  return request({
+    url: '/attendance/chartCheckin0',
+    method: 'post',
+    data
+  })
+}
+export function getCheckin2(data:object) {
+  return request({
+    url: '/attendance/chartCheckin2',
+    method: 'post',
+    data
+  })
+}
+export function getCheckout(data:object) {
+  return request({
+    url: '/attendance/chartCheckout',
+    method: 'post',
+    data
+  })
+}
+
 export function getExcel(data:object) {
   return request({
     url: '/attendance/excel',

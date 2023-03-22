@@ -23,10 +23,20 @@ const route: Route[] = [
       //   component: createNameComponent(() => import('@/views/main/attendance/department.vue')),
       //   meta: { title: '部门' }
       // },
-      {
+      // {
+      //   path: 'index',
+      //   component: createNameComponent(() => import('@/views/main/attendance/index.vue')),
+      //   meta: { title: '考勤图' }
+      // }
+        {
         path: 'index',
         component: createNameComponent(() => import('@/views/main/attendance/index.vue')),
-        meta: { title: '考勤图' }
+        meta: { title: '签到图' }
+      },
+      {
+        path: 'index2',
+        component: createNameComponent(() => import('@/views/main/attendance/index2.vue')),
+        meta: { title: '签退图' }
       }
     ]
   }

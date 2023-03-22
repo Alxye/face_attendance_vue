@@ -62,7 +62,7 @@ export default defineComponent({
       showButton: true
     })
     const layer = reactive({
-      width: "30%",
+      width: "50%",
       show: false,
       showButton: true
     })

@@ -22,7 +22,7 @@
       <el-form-item label="签到：" prop="am_type">
         <el-radio-group v-model="form.am_type">
           <el-radio
-            v-for="item in signData"
+            v-for="item in clockin"
             :key="item.value"
             :label="item.value"
             >{{ item.label }}</el-radio
@@ -35,13 +35,13 @@
         v-model="form.clock_in_time"
         type="datetime"
         placeholder="选择日期和时间"
-        value-format="YYYY-MM-DD h:m:s"
+        value-format="YYYY-MM-DD H:m:s"
       />
       </el-form-item>
       <el-form-item label="签退：" prop="pm_type">
         <el-radio-group v-model="form.pm_type">
           <el-radio
-            v-for="item in signData"
+            v-for="item in clockout"
             :key="item.value"
             :label="item.value"
             >{{ item.label }}</el-radio
@@ -54,7 +54,7 @@
         v-model="form.clock_out_time"
         type="datetime"
         placeholder="选择日期和时间"
-        value-format="YYYY-MM-DD h:m:s"
+        value-format="YYYY-MM-DD H:m:s"
       />
       </el-form-item>
       <!-- <el-form-item label="选择器：" prop="select">
@@ -73,7 +73,7 @@ import type { Ref } from "vue";
 import type { ElFormItemContext } from "element-plus/lib/el-form/src/token";
 import { defineComponent, ref } from "vue";
 import { add, update } from "@/api/attendance";
-import { selectData, typeData ,signData} from "./enum";
+import { selectData, typeData ,clockin,clockout} from "./enum";
 import Layer from "@/components/layer/index.vue";
 export default defineComponent({
   components: {
@@ -126,7 +126,8 @@ export default defineComponent({
       ruleForm,
       selectData,
       typeData,
-      signData,
+      clockin,
+      clockout,
       defaultTime,
     };
   },
