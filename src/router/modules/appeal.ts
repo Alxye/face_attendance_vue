@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/appeal',
     component: Layout,
     redirect: '/appeal/manage',
-    meta: { title: '员工管理', icon: 'sfont system-document' },
+    meta: { title: '员工管理', icon: 'sfont system-shequ' },
     children: [
       {
         path: 'manage',

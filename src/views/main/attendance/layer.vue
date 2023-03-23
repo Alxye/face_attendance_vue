@@ -8,7 +8,7 @@
       style="margin-right: 30px"
     >
       <el-form-item label="工号：" prop="staff_id">
-        <el-input v-model="form.staff_id" placeholder="请输入工号"></el-input>
+        <el-input :disabled="!form.is_edit" v-model="form.staff_id" placeholder="请输入工号"></el-input>
       </el-form-item>
       <el-form-item label="日期：" prop="date">
         <!-- <el-input v-model="form.date" placeholder="只能输入正整数"></el-input> -->
@@ -103,6 +103,7 @@ export default defineComponent({
       clock_out_time: "",
       am_type: "",
       pm_type: "",
+      is_edit:true
     });
     const rules = {
       staff_id: [{ required: true, message: "请输入工号", trigger: "blur" }],
@@ -116,6 +117,7 @@ export default defineComponent({
       // 用于判断新增还是编辑功能
       if (props.layer.row) {
         form.value = JSON.parse(JSON.stringify(props.layer.row)); // 数量量少的直接使用这个转
+        form.value.is_edit=false
       } else {
       }
     }
@@ -128,7 +130,7 @@ export default defineComponent({
       typeData,
       clockin,
       clockout,
-      defaultTime,
+      defaultTime
     };
   },
   methods: {

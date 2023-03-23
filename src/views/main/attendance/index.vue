@@ -44,12 +44,17 @@ import Chart from '@/components/charts/index.vue'
 import option from './modules/bar'
 // 引入options配置
 import options from "./options/line";
+import moment from "moment-timezone";
+// import moment from "moment"
 export default defineComponent({
   components:{
     Chart
   },
   setup() {
-    const select_month = ref('2023-03')
+    // console.log('>>>>',)
+
+    const select_month = ref(moment().format('YYYY-MM'))
+    // const select_month = ref('2023-03')
 
     const option_bar = reactive(option)
 
@@ -61,7 +66,7 @@ export default defineComponent({
     const getdata = () => {
       let params = {
         did: localStorage.getItem("did"),
-        select_month:3
+        select_month:select_month.value
       };
       getCheckin2(params)
         .then((res) => {
@@ -167,6 +172,8 @@ export default defineComponent({
     const handelChangeMonth = () =>{
       // getdata()
       console.log(select_month)
+      console.log(select_month.value)
+      getdata();
     }
     onMounted(() => {});
     return {
@@ -192,7 +199,7 @@ export default defineComponent({
   justify-content: center;
 }
   .box {
-    margin: 0px auto 0;
+    margin: 0 auto 0;
     width: calc(100% - 40px);
     background: var(--system-page-background);
     padding: 20px;

@@ -15,4 +15,5 @@ export const selectData = [
     { value: 0, label: '未注册' },
     { value: 1, label: '员工' },
     { value: 2, label: '管理员' },
+    { value: 3, label: '待审核管理员' },
   ]

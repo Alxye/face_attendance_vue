@@ -6,7 +6,7 @@ const route: Route[] = [
     path: '/employee',
     component: Layout,
     redirect: '/employee/manage',
-    meta: { title: '员工管理', icon: 'sfont system-document' },
+    meta: { title: '员工管理', icon: 'sfont system-zidingyi' },
     children: [
       {
         path: 'manage',

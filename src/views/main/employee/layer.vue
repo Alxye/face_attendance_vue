@@ -8,7 +8,7 @@
       style="margin-right: 30px"
     >
       <el-form-item label="工号：" prop="staff_id">
-        <el-input v-model="form.staff_id" placeholder="请输入名称"></el-input>
+        <el-input :disabled="form.is_edit" v-model="form.staff_id" placeholder="请输入名称"></el-input>
 <!--        <el-input v-if="!props.layer.row" v-model="form.staff_id" placeholder="请输入工号"></el-input>-->
 <!--        <el-col  v-if="props.layer.row" >{{form.staff_id}}</el-col>-->
       </el-form-item>
@@ -76,7 +76,8 @@ export default defineComponent({
       staff_id: "",
       age: "",
       type: "",
-      department_id: "",
+      department_id: localStorage.getItem('did'),
+      is_edit:false
     });
     const rules = {
       staff_id: [{ required: true, message: "请输入工号", trigger: "blur" }],
@@ -90,6 +91,7 @@ export default defineComponent({
       // 用于判断新增还是编辑功能
       if (props.layer.row) {
         form.value = JSON.parse(JSON.stringify(props.layer.row)); // 数量量少的直接使用这个转
+        form.value.is_edit=true
       } else {
       }
     }
