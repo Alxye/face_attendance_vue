@@ -16,8 +16,13 @@ export const selectData = [
     { value: 1, label: '员工' },
     { value: 2, label: '管理员' },
   ]
-  export const signData = [
-    { value: 0, label: '已签' },
-    { value: 1, label: '迟到' },
-    { value: 2, label: '未签' },
+  export const clockin = [
+    { value: 0, label: '未签' },
+    { value: 1, label: '已签' },
+    { value: 2, label: '迟到' },
+  ]
+  export const clockout = [
+    { value: 0, label: '未签' },
+    { value: 1, label: '已签' },
+    { value: 2, label: '早退' },
   ]

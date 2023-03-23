@@ -5,19 +5,19 @@
         <el-button type="primary" :icon="Plus" @click="handleAdd">{{
           $t("message.common.add")
         }}</el-button>
-        <el-popconfirm
-          :title="$t('message.common.delTip')"
-          @confirm="handleDel(chooseData)"
-        >
-          <template #reference>
-            <el-button
-              type="danger"
-              :icon="Delete"
-              :disabled="chooseData.length === 0"
-              >{{ $t("message.common.delBat") }}</el-button
-            >
-          </template>
-        </el-popconfirm>
+<!--        <el-popconfirm-->
+<!--          :title="$t('message.common.delTip')"-->
+<!--          @confirm="handleDel(chooseData)"-->
+<!--        >-->
+<!--          <template #reference>-->
+<!--            <el-button-->
+<!--              type="danger"-->
+<!--              :icon="Delete"-->
+<!--              :disabled="chooseData.length === 0"-->
+<!--              >{{ $t("message.common.delBat") }}</el-button-->
+<!--            >-->
+<!--          </template>-->
+<!--        </el-popconfirm>-->
       </div>
       <div class="layout-container-form-search">
         <el-input
@@ -39,8 +39,6 @@
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="true"
-        :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
@@ -48,7 +46,7 @@
         <el-table-column prop="staff_id" label="工号" align="center" />
         <el-table-column prop="name" label="姓名" align="center" />
         <el-table-column prop="age" label="年龄" align="center" />
-        <el-table-column prop="department_id" label="部门" align="center" />
+<!--        <el-table-column prop="department_id" label="部门" align="center" />-->
         <el-table-column
           prop="type"
           label="类型"

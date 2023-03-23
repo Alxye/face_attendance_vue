@@ -18,13 +18,13 @@
       <el-form-item label="年龄：" prop="age">
         <el-input v-model="form.age" placeholder="只能输入正整数"></el-input>
       </el-form-item>
-      <el-form-item label="部门：" prop="department_id">
-        <el-input
-          v-model="form.department_id"
-          oninput="value=value.replace(/[^\d]/g,'')"
-          placeholder="只能输入正整数"
-        ></el-input>
-      </el-form-item>
+<!--      <el-form-item label="部门：" prop="department_id">-->
+<!--        <el-input-->
+<!--          v-model="form.department_id"-->
+<!--          oninput="value=value.replace(/[^\d]/g,'')"-->
+<!--          placeholder="只能输入正整数"-->
+<!--        ></el-input>-->
+<!--      </el-form-item>-->
       <!-- <el-form-item label="选择器：" prop="select">
                 <el-select v-model="form.choose" placeholder="请选择" clearable>
                       <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value"></el-option>

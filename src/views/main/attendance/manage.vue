@@ -6,19 +6,19 @@
         <el-button type="primary" :icon="Plus" @click="handleAdd">{{
           $t("message.common.add")
         }}</el-button>
-        <el-popconfirm
-          :title="$t('message.common.delTip')"
-          @confirm="handleDel(chooseData)"
-        >
-          <template #reference>
-            <el-button
-              type="danger"
-              :icon="Delete"
-              :disabled="chooseData.length === 0"
-              >{{ $t("message.common.delBat") }}</el-button
-            >
-          </template>
-        </el-popconfirm>
+<!--        <el-popconfirm-->
+<!--          :title="$t('message.common.delTip')"-->
+<!--          @confirm="handleDel(chooseData)"-->
+<!--        >-->
+<!--          <template #reference>-->
+<!--            <el-button-->
+<!--              type="danger"-->
+<!--              :icon="Delete"-->
+<!--              :disabled="chooseData.length === 0"-->
+<!--              >{{ $t("message.common.delBat") }}</el-button-->
+<!--            >-->
+<!--          </template>-->
+<!--        </el-popconfirm>-->
       </div>
       <div class="layout-container-form-search">
         <el-input
@@ -40,8 +40,6 @@
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="false"
-        :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
@@ -110,20 +108,17 @@ import { getData, del, getExcel } from "@/api/attendance";
 import Layer from "./layer.vue";
 import { ElMessage } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
-import { selectData, radioData, typeData } from "./enum";
+import { clockin,clockout } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
 import { useRoute } from "vue-router";
 // 2 获取实例
-
 export default defineComponent({
   name: "crudTable",
   filter: {},
-
   components: {
     Table,
     Layer,
   },
-
   setup() {
     const route = useRoute();
     // 3 解构赋值
@@ -136,10 +131,10 @@ export default defineComponent({
       }
     };
     const changeType_am = (row: any) => {
-      return row.am_type == 0 ? "已签" : row.am_type == 1 ? "迟到" : "未签";
+      return row.am_type == 0 ? "未签" : row.am_type == 1 ? "已签" : "迟到";
     };
     const changeType_pm = (row: any) => {
-      return row.pm_type == 0 ? "已签" : row.pm_type == 1 ? "迟到" : "未签";
+      return row.pm_type == 0 ? "未签" : row.pm_type == 1 ? "已签" : "早退";
     };
     // 存储搜索用的数据
     const query = reactive({
@@ -174,7 +169,7 @@ export default defineComponent({
       return val1 - val2;
     };
     const excel = () => {
-      
+
       let params = {
         did:localStorage.getItem('did'),
         date:date
@@ -226,7 +221,6 @@ export default defineComponent({
           did:localStorage.getItem('did')
         };
       }
-      console.log(">>>>>>>>",params)
       getData(params)
         .then((res) => {
           console.log(res);
@@ -245,7 +239,6 @@ export default defineComponent({
           //     radio ? (d.radioName = radio.label) : d.radio;
           //   });
           // }
-
           tableData.value = res.data;
           page.total = Number(res.total);
         })

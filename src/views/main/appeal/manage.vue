@@ -5,19 +5,19 @@
 <!--        <el-button type="primary" :icon="Plus" @click="handleAdd" :disabled="true">{{-->
 <!--          $t("message.common.add")-->
 <!--        }}</el-button>-->
-        <el-popconfirm
-          :title="$t('message.common.delTip')"
-          @confirm="handleDel(chooseData)"
-        >
-          <template #reference>
-            <el-button
-              type="danger"
-              :icon="Delete"
-              :disabled="chooseData.length === 0"
-              >{{ $t("message.common.delBat") }}</el-button
-            >
-          </template>
-        </el-popconfirm>
+<!--        <el-popconfirm-->
+<!--          :title="$t('message.common.delTip')"-->
+<!--          @confirm="handleDel(chooseData)"-->
+<!--        >-->
+<!--          <template #reference>-->
+<!--            <el-button-->
+<!--              type="danger"-->
+<!--              :icon="Delete"-->
+<!--              :disabled="chooseData.length === 0"-->
+<!--              >{{ $t("message.common.delBat") }}</el-button-->
+<!--            >-->
+<!--          </template>-->
+<!--        </el-popconfirm>-->
       </div>
       <div class="layout-container-form-search">
         <el-input
@@ -35,17 +35,25 @@
       </div>
     </div>
     <div class="layout-container-table">
+<!--      <Table-->
+<!--        ref="table"-->
+<!--        v-model:page="page"-->
+<!--        v-loading="loading"-->
+<!--        :showIndex="false"-->
+<!--        :showSelection="true"-->
+<!--        :data="tableData"-->
+<!--        @getTableData="getTableData"-->
+<!--        @selection-change="handleSelectionChange"-->
+<!--      >-->
       <Table
         ref="table"
         v-model:page="page"
         v-loading="loading"
-        :showIndex="false"
-        :showSelection="true"
         :data="tableData"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="id" label="编号" align="center" />
+        <el-table-column prop="id" label="申述编号" align="center" />
         <el-table-column prop="staff_id" label="工号" align="center" />
         <el-table-column prop="date" label="日期" align="center" />
         <el-table-column prop="time_state" label="时间" align="center" :formatter="changeState" />

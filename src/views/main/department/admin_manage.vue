@@ -74,7 +74,7 @@ export default defineComponent({
       show: false,
       title: '新增',
       showButton: true,
-      width:'30%'
+      width:'50%'
     })
     // 分页参数, 供table使用
     const page: Page = reactive({

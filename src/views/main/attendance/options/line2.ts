@@ -3,7 +3,7 @@ import * as echarts from 'echarts/core'
 const options = {
   color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
   title: {
-    text: '本月上班打卡情况'
+    text: '本月下班打卡情况'
   },
   tooltip: {
     trigger: 'axis',
@@ -15,7 +15,7 @@ const options = {
     }
   },
   legend: {
-    data: ['月签到', '月未签', '月迟到', 'Line 4', 'Line 5']
+    data: ['月签到', '月未签', '月早退', 'Line 4', 'Line 5']
   },
   toolbox: {
     feature: {
@@ -59,9 +59,7 @@ const options = {
           offset: 1,
           color: 'rgba(1, 191, 236)'
         }])
-        // color: '#80FFA5'
       },
-
       emphasis: {
         focus: 'series'
       },
@@ -92,7 +90,7 @@ const options = {
       data: [1,11,1,5,1,1,1,1,5,1,8,1]
     },
     {
-      name: '月迟到',
+      name: '月早退',
       type: 'line',
       stack: '总量',
       smooth: true,
@@ -104,10 +102,10 @@ const options = {
         opacity: 0.8,
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
           offset: 0,
-          color: '#377dff'
+          color: 'rgba(255, 0, 135)'
         }, {
           offset: 1,
-          color: '#37A2FF'
+          color: 'rgba(135, 0, 157)'
         }])
       },
       emphasis: {
