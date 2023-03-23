@@ -2,22 +2,6 @@
   <div class="layout-container">
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
-<!--        <el-button type="primary" :icon="Plus" @click="handleAdd" :disabled="true">{{-->
-<!--          $t("message.common.add")-->
-<!--        }}</el-button>-->
-<!--        <el-popconfirm-->
-<!--          :title="$t('message.common.delTip')"-->
-<!--          @confirm="handleDel(chooseData)"-->
-<!--        >-->
-<!--          <template #reference>-->
-<!--            <el-button-->
-<!--              type="danger"-->
-<!--              :icon="Delete"-->
-<!--              :disabled="chooseData.length === 0"-->
-<!--              >{{ $t("message.common.delBat") }}</el-button-->
-<!--            >-->
-<!--          </template>-->
-<!--        </el-popconfirm>-->
       </div>
       <div class="layout-container-form-search">
         <el-input
@@ -35,16 +19,6 @@
       </div>
     </div>
     <div class="layout-container-table">
-<!--      <Table-->
-<!--        ref="table"-->
-<!--        v-model:page="page"-->
-<!--        v-loading="loading"-->
-<!--        :showIndex="false"-->
-<!--        :showSelection="true"-->
-<!--        :data="tableData"-->
-<!--        @getTableData="getTableData"-->
-<!--        @selection-change="handleSelectionChange"-->
-<!--      >-->
       <Table
         ref="table"
         v-model:page="page"
@@ -225,12 +199,6 @@ export default defineComponent({
         getTableData(tableData.value.length === 1 ? true : false);
       });
     };
-    // 新增弹窗功能
-    // const handleAdd = () => {
-    //   layer.title = "新增数据";
-    //   layer.show = true;
-    //   delete layer.row;
-    // };
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
       layer.title = "编辑数据";

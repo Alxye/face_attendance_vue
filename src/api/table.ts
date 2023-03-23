@@ -18,16 +18,6 @@ export function getCategory(data: object) {
   })
 }
 
-// 获取树组织数据
-export function getTree(data: object) {
-  return request({
-    url: '/table/tree',
-    method: 'post',
-    baseURL: '/mock',
-    data
-  })
-}
-
 // 新增
 export function add(data: object) {
   return request({

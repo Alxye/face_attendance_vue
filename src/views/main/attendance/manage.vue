@@ -225,20 +225,6 @@ export default defineComponent({
         .then((res) => {
           console.log(res);
           let data = res.data;
-          // if (Array.isArray(data)) {
-          //   data.forEach((d) => {
-          //     const select = selectData.find(
-          //       (select) => select.value === d.choose
-          //     );
-          //     select
-          //       ? (d.chooseName = select.label)
-          //       : (d.chooseName = d.choose);
-          //     const radio = radioData.find(
-          //       (select) => select.value === d.radio
-          //     );
-          //     radio ? (d.radioName = radio.label) : d.radio;
-          //   });
-          // }
           tableData.value = res.data;
           page.total = Number(res.total);
         })

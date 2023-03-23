@@ -57,11 +57,6 @@
         value-format="YYYY-MM-DD H:m:s"
       />
       </el-form-item>
-      <!-- <el-form-item label="选择器：" prop="select">
-                <el-select v-model="form.choose" placeholder="请选择" clearable>
-                      <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                  </el-select>
-              </el-form-item> -->
 
     </el-form>
   </Layer>
@@ -73,7 +68,7 @@ import type { Ref } from "vue";
 import type { ElFormItemContext } from "element-plus/lib/el-form/src/token";
 import { defineComponent, ref } from "vue";
 import { add, update } from "@/api/attendance";
-import { selectData, typeData ,clockin,clockout} from "./enum";
+import {  clockin,clockout} from "./enum";
 import Layer from "@/components/layer/index.vue";
 export default defineComponent({
   components: {
@@ -126,8 +121,6 @@ export default defineComponent({
       rules,
       layerDom,
       ruleForm,
-      selectData,
-      typeData,
       clockin,
       clockout,
       defaultTime

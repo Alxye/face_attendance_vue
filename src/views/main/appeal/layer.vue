@@ -24,7 +24,7 @@ import type { Ref } from "vue";
 import type { ElFormItemContext } from "element-plus/lib/el-form/src/token";
 import { defineComponent, ref } from "vue";
 import { add, update } from "@/api/appeal";
-import { selectData, typeData } from "./enum";
+import { typeData } from "./enum";
 import Layer from "@/components/layer/index.vue";
 export default defineComponent({
   components: {
@@ -75,14 +75,13 @@ export default defineComponent({
       rules,
       layerDom,
       ruleForm,
-      selectData,
       typeData,
     };
   },
   methods: {
     submit() {
       if (this.ruleForm) {
-        this.ruleForm.validate((valid) => {
+        this.ruleForm.validate((valid:any) => {
           if (valid) {
             let params = this.form;
             console.log('???>>>',params);

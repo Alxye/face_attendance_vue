@@ -18,7 +18,7 @@ export function loginApi(data: object) {
 /** 管理员注册api */
 export function Register(data: object) {
   return request({
-    url: '/user/register',
+    url: '/user/admin_register',
     method: 'post',
     data
   })
@@ -80,6 +80,5 @@ export function getMenuApi() {
   return request({
     url: '/menu/list',
     method: 'post',
-    // baseURL: '/mock'
   })
 }

@@ -40,9 +40,6 @@ export default ({command}: ConfigEnv): UserConfigExport => {
             // port: 5000,
             // host: '101.132.152.202',
             open: true,
-            // proxy: { // 代理配置
-            //   '/dev': 'https://www.fastmock.site/mock/48cab8545e64d93ff9ba66a87ad04f6b/'
-            // },
         },
         build: {
             rollupOptions: {
@@ -55,17 +52,6 @@ export default ({command}: ConfigEnv): UserConfigExport => {
         },
         plugins: [
             vue(),
-            // viteMockServe({
-            //   mockPath: 'mock',
-            //   localEnabled: command === 'serve',
-            //   prodEnabled: command !== 'serve' && prodMock,
-            //   watchFiles: true,
-            //   injectCode: `
-            //     import { setupProdMockServer } from '../mockProdServer';
-            //     setupProdMockServer();
-            //   `,
-            //   logger: true,
-            // }),
             vitePluginSvg({
                 // 必要的。必须是绝对路径组成的数组。
                 iconDirs: [
