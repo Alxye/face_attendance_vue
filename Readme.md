@@ -306,4 +306,5 @@ const formatDateTime = (InputDate: Date) => {
 }
 const select_month = ref(formatDateTime(new Date()))
 ```
-* 发现了一个bug，即考勤管理页面，分页有问题
+* 发现了一个bug，即考勤管理页面，分页有问题（tyz已修正）
+* 整合完成，正式提交

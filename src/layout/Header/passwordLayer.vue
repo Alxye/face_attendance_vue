@@ -1,6 +1,6 @@
 <template>
-  <Layer :layer="layer" @confirm="submit" ref="layerDom">
-    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px;">
+  <Layer :layer="layer" @confirm="submit" ref="layerDom" customClass="customWidth" >
+    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px" style="margin-right:30px">
       <el-form-item label="管理员工号：" prop="name">
         {{form.userId}}
       </el-form-item>
@@ -91,5 +91,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  
+  .customWidth{
+        width:30%;
+    }
 </style>
