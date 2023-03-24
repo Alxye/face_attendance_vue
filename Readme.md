@@ -99,28 +99,28 @@
 ```angular2html
 **字典**
 <script>
-    props: {
-        dic: {
-            type: Object,
-        default:
-            () => {
-                return {
-                    name: '',
-                    notice: '',
-                    staff_count: 0,
-                    id: 0
-                }
-            }
-        }
-    ,
-    }
+  props: {
+      dic: {
+          type: Object,
+      default:
+          () => {
+              return {
+                  name: '',
+                  notice: '',
+                  staff_count: 0,
+                  id: 0
+              }
+          }
+      }
+  ,
+  }
 **数据监听 **
-    watch(
-            () => props.dic,
-            (newValue, oldValue) => {
-            ...
-            }
-    )
+watch(
+        () => props.dic,
+        (newValue, oldValue) => {
+        ...
+        }
+)
 ```
 * 加入了打卡时间设置，但有一个问题，new Data().setTime(时间戳)返回的是number对象，而不是Data对象无法在TimePicker里面显示（悲
 ## 2023.3.17 zxx
@@ -131,53 +131,53 @@
 ```angular2html
 // 其中clockin & clockout 绑定两个TimePicker，reactive用于响应
 let form = reactive({
-      id: data.id,
-      name: data.name,
-      notice: data.notice,
-      staff_count: data.staff_count,
-      ///// 用于时间戳
-      // clockin: value_clockin,
-      // clockout: value_clockout,
-      clockin: [new Date("2023-01-01 " + data.clock_in_start), new Date("2023-01-01 " + data.clock_in_end)],
-      clockout: [new Date("2023-01-01 " + data.clock_out_start), new Date("2023-01-01 " + data.clock_out_end)],
-      disabled: data.id != store.state.user.info.department_id
-    })
+    id: data.id,
+    name: data.name,
+    notice: data.notice,
+    staff_count: data.staff_count,
+    ///// 用于时间戳
+    // clockin: value_clockin,
+    // clockout: value_clockout,
+    clockin: [new Date("2023-01-01 " + data.clock_in_start), new Date("2023-01-01 " + data.clock_in_end)],
+    clockout: [new Date("2023-01-01 " + data.clock_out_start), new Date("2023-01-01 " + data.clock_out_end)],
+    disabled: data.id != store.state.user.info.department_id
+  })
 // 与昨日同，采用watch()监听树节点传递的值，并更新卡片组件值
-watch(
-        () => props.dic,
-        (newValue, oldValue) => {
-          ///// 用于时间戳
-          // value_clockin.value[0].setTime(newValue.clock_in_start)
-          // value_clockin.value[1].setTime(newValue.clock_in_end)
-          // value_clockout.value[0].setTime(newValue.clock_out_start)
-          // value_clockout.value[1].setTime(newValue.clock_out_end)
-          // form.clockin = [value_clockin.value[0],value_clockin.value[1]]
-          // form.clockout = [value_clockout.value[0],value_clockout.value[1]]
-          // form.disabled = newValue.id != store.state.user.info.department_id;
-          
-          // Ts Date对象创造需有年月日，故看似赘余实则必要
-          form.clockin = [new Date("2023-01-01 " + newValue.clock_in_start), new Date("2023-01-01 " + newValue.clock_in_end)],
-          form.clockout = [new Date("2023-01-01 " + newValue.clock_out_start), new Date("2023-01-01 " + newValue.clock_out_end)],
-          form.disabled = newValue.id != store.state.user.info.department_id;
-        }
+  watch(
+    () => props.dic,
+    (newValue, oldValue) => {
+      ///// 用于时间戳
+      // value_clockin.value[0].setTime(newValue.clock_in_start)
+      // value_clockin.value[1].setTime(newValue.clock_in_end)
+      // value_clockout.value[0].setTime(newValue.clock_out_start)
+      // value_clockout.value[1].setTime(newValue.clock_out_end)
+      // form.clockin = [value_clockin.value[0],value_clockin.value[1]]
+      // form.clockout = [value_clockout.value[0],value_clockout.value[1]]
+      // form.disabled = newValue.id != store.state.user.info.department_id;
+      
+      // Ts Date对象创造需有年月日，故看似赘余实则必要
+      form.clockin = [new Date("2023-01-01 " + newValue.clock_in_start), new Date("2023-01-01 " + newValue.clock_in_end)],
+      form.clockout = [new Date("2023-01-01 " + newValue.clock_out_start), new Date("2023-01-01 " + newValue.clock_out_end)],
+      form.disabled = newValue.id != store.state.user.info.department_id;
+    }
 // getTime() 用于处理request提交的time值由Date对象转变为字符串
 function getTime(date:Date){
-      const sign2 = ":";
-      let hour = date.getHours(); // 时
-      let minutes = date.getMinutes(); // 分
-      let seconds = date.getSeconds(); //秒
-      // 给一位数的数据前面加 “0”
-      if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
-      }
-      if (minutes >= 0 && minutes <= 9) {
-        minutes = "0" + minutes;
-      }
-      if (seconds >= 0 && seconds <= 9) {
-        seconds = "0" + seconds;
-      }
-      return hour + sign2 + minutes + sign2 + seconds;
+    const sign2 = ":";
+    let hour = date.getHours(); // 时
+    let minutes = date.getMinutes(); // 分
+    let seconds = date.getSeconds(); //秒
+    // 给一位数的数据前面加 “0”
+    if (hour >= 0 && hour <= 9) {
+      hour = "0" + hour;
     }
+    if (minutes >= 0 && minutes <= 9) {
+      minutes = "0" + minutes;
+    }
+    if (seconds >= 0 && seconds <= 9) {
+      seconds = "0" + seconds;
+    }
+    return hour + sign2 + minutes + sign2 + seconds;
+  }
 ```
 `后端采用借助time.strptime将字符串"01:23:45"转化为time.struct_time用于更新操作`
 ```angular2html
@@ -265,18 +265,18 @@ sudo systemctl enable gunicorn.service
   * 4、对于导出功能与原模块的冲突执行纠正，具体代码调整位置：
    `src/utils/system/request.ts`
     ```angular2html
-      (response: AxiosResponse) => {
-          const res = response.data
-          if (res.code === 200) {
-              return res
-          } else {
-              if (response.status === 200 && !res.hasOwnProperty('code')) {
-                  return response
-              }
-              showError(res)
-              return Promise.reject(res)
-          }
-      },
+    (response: AxiosResponse) => {
+        const res = response.data
+        if (res.code === 200) {
+            return res
+        } else {
+            if (response.status === 200 && !res.hasOwnProperty('code')) {
+                return response
+            }
+            showError(res)
+            return Promise.reject(res)
+        }
+    },
     ```
 * 晚上：
   * 1、合并了Vue前端与flask后端，有个功能待加入，考勤查询表的按月查询，淦！
@@ -284,8 +284,26 @@ sudo systemctl enable gunicorn.service
 * 明日目标：
   * 1、合并微信后端flask+完成按月查询这玩意
   * 2、程序调试，测试，部署
-## 2023.3.23
+## 2023.3.23 zxx
 * 悲报：数据库炸了，废了一上午时间用于恢复云服务器
 * 在整合汤逸舟绘图的基础上，加入了按月查询的功能，应该没有bug，待调试
 * 整合调试完了vue3，对于员工管理修改staff_id 功能暂且执行不可修改操作，后续有时间再改
 * 下午加班完成了微信后端与vue后端的整合，微信端尚存在问题，待该模块负责人调试
+## 2023.3.24 zxx
+* `npm run build` 时出现问题，moment & moment-timezone 不可用，问题在考勤月历表当前日期查询上，先前采用了moment().format方法获取当前月份并格式化为‘YYYY-MM’的格式，先采用原生Date方法转换（叹气：不可贪图捷径啊
+```angular2html
+-- src/views/main/attendance/index.vue
+<script>
+const formatDateTime = (InputDate: Date) => {
+  var date = new Date(InputDate);
+  var timeStr = date.getFullYear() + '-';
+  if (date.getMonth() < 9) {
+    //月份从0开始的
+    timeStr += '0';
+  }
+  timeStr += date.getMonth() + 1 ;
+  return timeStr;
+}
+const select_month = ref(formatDateTime(new Date()))
+```
+* 发现了一个bug，即考勤管理页面，分页有问题

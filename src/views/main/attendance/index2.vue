@@ -40,15 +40,25 @@ import Chart from '@/components/charts/index.vue'
 import option from './modules/bar2'
 // 引入options配置
 import options from "./options/line2";
-import moment from "moment-timezone";
+// import moment from "moment-timezone";
 export default defineComponent({
   components:{
     Chart
   },
   setup() {
     // const select_month = ref('2023-03')
-    const select_month = ref(moment().format('YYYY-MM'))
 
+    const formatDateTime = (InputDate: Date) => {
+      var date = new Date(InputDate);
+      var timeStr = date.getFullYear() + '-';
+      if (date.getMonth() < 9) {
+        //月份从0开始的
+        timeStr += '0';
+      }
+      timeStr += date.getMonth() + 1 ;
+      return timeStr;
+    }
+    const select_month = ref(formatDateTime(new Date()))
     const option_bar = reactive(option)
 
     // const loading = ref(true);
