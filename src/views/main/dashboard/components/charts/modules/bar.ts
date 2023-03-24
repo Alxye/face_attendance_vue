@@ -9,7 +9,8 @@ const option = {
   tooltip: {
     trigger: 'axis',
     // formatter: '{b}<br />{a2}:{c2}%<br />{a1}:{c1}%<br />{a0}:{c0}%'
-    formatter: function (params, ticket, callback) {
+    // formatter: function (params, ticket, callback) {
+    formatter: function (params:any) {
       var htmlStr = '';
       for (var i = 0; i < params.length; i++) {
         var param = params[i];

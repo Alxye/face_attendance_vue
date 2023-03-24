@@ -1,25 +1,27 @@
 <template>
   <div class="box">
-    <corp-info />
+    <CorpInfo />
     <Card />
-    <Charts />
-    <Communication />
+<!--    <Charts />-->
+<!--    <Communication />-->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import basicTemplate from './components/CorpInfo.vue'
+import CorpInfo from './components/CorpInfo.vue'
 import Communication from './components/communication.vue'
 import Card from './components/card/index.vue'
 import Charts from './components/charts/index.vue'
-import CorpInfo from "@/views/main/dashboard/components/CorpInfo.vue";
+import {hideLoading, showLoading} from "@/utils/system/loading";
+import {getStaffDistribution} from "@/api/corporation";
+import router from "@/router";
+import { useStore } from 'vuex'
 export default defineComponent({
   components: {
-    CorpInfo,
     Card,
     Charts,
-    basicTemplate,
+    CorpInfo,
     Communication,
   }
 })

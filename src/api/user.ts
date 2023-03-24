@@ -1,12 +1,25 @@
 import request from '@/utils/system/request'
-
+/** 获取首页4卡片内容api */
+export function getDashboardCardData(data: object) {
+  return request({
+    url: '/department/dashboardCard',
+    method: 'post',
+    data
+  })
+}
 /** 登录api */
 export function loginApi(data: object) {
   return request({
     url: '/user/login',
     method: 'post',
-    // baseURL: '/',
-    // baseURL: '101.132.152.202:5000/',
+    data
+  })
+}
+/** 管理员注册api */
+export function Register(data: object) {
+  return request({
+    url: '/user/admin_register',
+    method: 'post',
     data
   })
 }
@@ -16,7 +29,30 @@ export function getInfoApi(data: object) {
   return request({
     url: '/user/info',
     method: 'post',
-    // baseURL: '/mock',
+    data
+  })
+}
+/** 获取用户信息Api */
+export function addAdmin(data: object) {
+  return request({
+    url: '/user/addAdmin',
+    method: 'post',
+    data
+  })
+}
+/** 获取用户信息Api */
+export function updateAdmin(data: object) {
+  return request({
+    url: '/user/updateAdmin',
+    method: 'post',
+    data
+  })
+}
+/** 获取用户信息Api */
+export function deleteAdmin(data: object) {
+  return request({
+    url: '/user/deleteAdmin',
+    method: 'post',
     data
   })
 }
@@ -24,9 +60,8 @@ export function getInfoApi(data: object) {
 /** 退出登录Api */
 export function loginOutApi() {
   return request({
-    url: '/user/out',
+    url: '/user/logout',
     method: 'post',
-    // baseURL: '/mock'
   })
 }
 
@@ -35,16 +70,15 @@ export function passwordChange(data: object) {
   return request({
     url: '/user/pwd_change',
     method: 'post',
-    // baseURL: '/mock',
     data
   })
 }
+
 
 /** 获取登录后需要展示的菜单 */
 export function getMenuApi() {
   return request({
     url: '/menu/list',
     method: 'post',
-    // baseURL: '/mock'
   })
 }

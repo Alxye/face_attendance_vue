@@ -11,7 +11,7 @@
       <!-- 快捷功能按钮 -->
       <div class="function-list">
         <div class="function-list-item hidden-sm-and-down"><Full-screen /></div>
-        <div class="function-list-item"><SizeChange /></div>
+<!--        <div class="function-list-item"><SizeChange /></div>-->
         <div class="function-list-item hidden-sm-and-down"><Theme /></div>
         <div class="function-list-item hidden-sm-and-down"><Github /></div>
       </div>
@@ -45,6 +45,9 @@ import Github from './functionList/github.vue'
 import Theme from './functionList/theme.vue'
 import Breadcrumb from './Breadcrumb.vue'
 import PasswordLayer from './passwordLayer.vue'
+import {hideLoading, showLoading} from "@/utils/system/loading";
+import {getStaffDistribution} from "@/api/corporation";
+import router from "@/router";
 export default defineComponent({
   components: {
     FullScreen,
@@ -74,7 +77,10 @@ export default defineComponent({
     const loginOut = () => {
       store.dispatch('user/loginOut')
     }
-    
+
+    // const store = useStore()
+
+
     const showPasswordLayer = () => {
       layer.show = true
     }

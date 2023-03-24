@@ -157,14 +157,14 @@ export const style: Style = {
       tabBackground: '#1b1b1b'
     },
     container: {
-      background: '#000',
-      mainBackground: '#18181c'
+      background: 'rgba(255, 255, 255, 0.92)',
+      mainBackground: 'rgba(255, 255, 255, 0.92)'
     },
     page: {
-      background: '#18181c',
-      color: '#c7c7c7',
-      tipColor: 'rgba(255, 255, 255, 0.45)',
-      borderColor: '#3e3e3e'
+      background: 'rgba(255, 255, 255, 0.92)',
+      color: '#303133',
+      tipColor: 'rgba(0, 0, 0, 0.45)',
+      borderColor: '#ebeef5'
     }
   }
 }

@@ -55,14 +55,13 @@ export default defineComponent({
     }
     function submit() {
       if (ruleForm.value) {
-        ruleForm.value.validate((valid) => {
+        ruleForm.value.validate((valid: any) => {
           if (valid) {
             let params = {
               staff_id: form.value.userId,
               old: form.value.old,
               new: form.value.new
             }
-            console.log(params)
             passwordChange(params)
             .then(res => {
               ElMessage({

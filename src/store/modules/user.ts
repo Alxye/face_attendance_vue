@@ -1,5 +1,5 @@
 import { loginApi, getInfoApi, loginOutApi } from '@/api/user'
-import { ActionContext } from 'vuex'
+import {ActionContext, useStore} from 'vuex'
 
 export interface userState {
   token: string,
@@ -37,13 +37,26 @@ const mutations = {
 
 // actions
 const actions = {
+  // update user info
+  update({ commit, dispatch }: ActionContext<userState, userState>, staff_id: any) {
+    return new Promise((resolve, reject) => {
+        // commit('infoChange', params)
+
+        dispatch('getInfo', { staff_id: staff_id })
+        resolve(staff_id)
+    })
+  },
+
   // login by login.vue
   login({ commit, dispatch }: ActionContext<userState, userState>, params: any) {
     return new Promise((resolve, reject) => {
       loginApi(params)
       .then(res => {
+        // tyz
+        // console.log(res);
+        // localStorage.setItem('did', JSON.stringify(res.did))
+
         commit('tokenChange', res.data.token)
-        console.log(res.data)
         dispatch('getInfo', { staff_id: res.data.info.staff_id })
         .then(infoRes => {
           resolve(res.data.token)
@@ -59,6 +72,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfoApi(params)
       .then(res => {
+        localStorage.setItem('did', JSON.stringify(res.data.info.department_id))
         commit('infoChange', res.data.info)
         resolve(res.data.info)
       })
@@ -75,6 +89,7 @@ const actions = {
 
     })
     .finally(() => {
+      localStorage.removeItem('did');
       localStorage.removeItem('tabs')
       localStorage.removeItem('vuex')
       sessionStorage.removeItem('vuex')
