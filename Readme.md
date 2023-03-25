@@ -69,7 +69,7 @@
 
 ## 一些预览
 
-![Image](https://github.com/Alxye/face_attendance_vue/raw/main/static/login.png)
-![Image](https://github.com/Alxye/face_attendance_vue/raw/main/static/dashboard.png)
-![Image](https://github.com/Alxye/face_attendance_vue/raw/main/static/echart.png)
-![Image](https://github.com/Alxye/face_attendance_vue/raw/main/static/employee.png)
+![Image](https://github.com/Alxye/face_attendance_vue/raw/main/public/login.png)
+![Image](https://github.com/Alxye/face_attendance_vue/raw/main/public/dashboard.png)
+![Image](https://github.com/Alxye/face_attendance_vue/raw/main/public/echart.png)
+![Image](https://github.com/Alxye/face_attendance_vue/raw/main/public/employee.png)
