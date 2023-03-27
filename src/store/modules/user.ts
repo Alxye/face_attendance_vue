@@ -52,10 +52,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       loginApi(params)
       .then(res => {
-        // tyz
-        // console.log(res);
-        // localStorage.setItem('did', JSON.stringify(res.did))
-
         commit('tokenChange', res.data.token)
         dispatch('getInfo', { staff_id: res.data.info.staff_id })
         .then(infoRes => {
