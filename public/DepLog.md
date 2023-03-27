@@ -307,3 +307,6 @@ const select_month = ref(formatDateTime(new Date()))
 ```
 * 发现了一个bug，即考勤管理页面，分页有问题（tyz已修正）
 * 整合完成，正式提交
+## 2023.3.27 zxx
+* 悲！验收的时候发现部门定位没做，晚上做完了，叉会儿腰.jpg
+* 文档还挺多，真费点心
