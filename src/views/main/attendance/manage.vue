@@ -172,13 +172,15 @@ export default defineComponent({
 
       let params = {
         did:localStorage.getItem('did'),
-        date:date
+        date:date,
+        ...query
       };
       if(date==null)
       {
         params = {
         did:localStorage.getItem('did'),
-        date:""
+        date:"",
+        ...query
       };
       }
       getExcel(params)
