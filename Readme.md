@@ -2,8 +2,10 @@
 <p align="center">
     <a href="./public/DepLog.md">
         开发日志
-    </a>
-    
+    </a>    
+</p>
+
+<p align="center">
     <a href="https://www.bilibili.com/video/BV1mh41137yS/?vd_source=9a233e677646447199a2bcdb7c74c126">
         Demo视频
     </a>
