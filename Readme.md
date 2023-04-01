@@ -3,6 +3,10 @@
     <a href="./public/DepLog.md">
         开发日志
     </a>
+    
+    <a href="https://www.bilibili.com/video/BV1mh41137yS/?vd_source=9a233e677646447199a2bcdb7c74c126">
+        Demo视频
+    </a>
 </p>
 
 后台管理网站在线预览地址：http://101.132.152.202  登录名：1112 密码：123456
